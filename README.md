@@ -20,5 +20,13 @@ Itens de documentação está no diretório /documentação, são eles: <br>
   -PMCanvas do produto<br>
   -Visão e backlog<br>
   -Diagrama de atividades e de casos de uso (UML)<br>
-  -Protótipos criados em Figma<br>
-  -Imagens utilizadas no projeto<br>
+  
+Organização do código fonte:<br><br>
+
+  -Arquivo index.php faz a manipulação dos arquivos html, css e bibliotecas do site.<br>
+  -Arquivos .htacess para fazer a manipulação de URLs, com o propósito de gerar URLs mais curtas e diretas.<br>
+  -Diretório lib, que contém as bibliotecas CSS, JavaScript e de imagens do projeto.<br>
+  -Diretório includes, por enquanto vazio, mas que serão feitos os direcionamentos do back-end para o front-end.<br>
+  -Diretório html, que contém os arquivos visuais do projeto.<br><br>
+
+O projeto foi desenvolvido respeitando características MVC (Model, view e controller). Onde se separam os arquivos visuais, bibliotecas e back-end para uma fácil manutenção.
