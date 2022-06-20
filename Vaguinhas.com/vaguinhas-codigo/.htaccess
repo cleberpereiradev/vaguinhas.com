@@ -1,0 +1,6 @@
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  RewriteRule ^principal?$ principal.php [NC,L]
+  RewriteRule ^home?$ index.php [NC,L]
+</IfModule>
