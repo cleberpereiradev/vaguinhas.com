@@ -1,0 +1,85 @@
+.navbar{
+	background-color: #2e3e46;
+	border-bottom: 0.5px solid #8899a1;
+}
+.navbar ul li a:hover{
+	color: #be1e10;
+}
+.navbar ul li .active{
+	border-bottom: 2px solid #be1e10;
+}
+
+/* Banner das Empresas */
+
+.banner-alunos{
+    background-color: #2e3e46;
+    background-image: url('../img/img_empresa.jpg');
+    background-repeat: no-repeat;
+    background-position: right;
+    height: 550px;
+	overflow: hidden;
+}
+@media(max-width: 1600px){
+	.banner-alunos{
+		background-image: url('../img/img_empresa_escuro.jpg');
+	}
+}
+.h1-search{
+    color: #fff;
+    margin-left: 100px;
+    padding-top: 170px;
+    margin-bottom: 30px;
+}
+.btn-afilia { 
+    background:  url()  center no-repeat;
+    border: none;
+    background-color: #fff;
+	margin-left: 12%;
+    color: #2e3e46;
+    font-weight: bold;
+    padding: 10px 30px;
+    font-size: 16px;
+    border-radius: 35px;
+}
+
+/* Vagas do Site */
+.banner-vagas{
+    background-color: #2e3e46;
+	color: #fff;
+}
+.btn-primary{
+	background-color: #2e3e46;
+	color: #fff;
+	border: 1px solid #8899a1;
+}
+.btn-primary:hover{
+	background-color: #be1e10;
+	color: #fff;
+	border: 1px solid #f0685c;
+}
+
+/* Rodapé */
+.rodape{
+    background-color: #2e3e46;
+	color: #fff;
+}
+
+/* Cadastro Empresa */
+.cadastro{
+	border-radius: 15px;
+	background-color: #2e3e46;
+	color: #fff;
+	margin-top: 5%;
+	margin-bottom: 10%;
+	padding: 5%;
+}
+.cadastro a:hover{
+	color: #be1e10;
+	text-decoration: none;
+}
+.btn-secondary{
+	color: #2e3e46 !important;
+	background-color: #fff;
+	border: 1px #d1d1d1 solid;
+}
+

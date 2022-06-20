@@ -1,0 +1,59 @@
+<?php
+	include "html/menu/banner.html";
+?>
+<!-- SOBRE O PORTAL -->
+<div class="container">
+	<div class="row" id="portal">
+		<div class="col-md-12">
+			<h1 class="h1-portal">CONHEÇA O PORTAL</h1>
+			<h2 class="h2-portal">
+				O Vaguinhas.com é o site oficial da Fatec Itapira - "Dr. Ogari de Castro Pacheco", criado por alunos, para alunos que querem encontrar o estágio ideal para o seu curso, assim como, ajuda as empresas a conseguirem profissionais altamente qualificados para suas vagas de estágio. 
+			</h2>
+			<br><br><br><br>
+		</div>
+	</div>	
+</div>
+<!-- ALGUMAS VAGAS -->
+<div class="row banner-vagas">
+	<div class="container">
+		<h1>VAGAS</h1><br>
+		<div class="row">
+			<div class="col-md-2"></div>
+<?php
+	for($i = 0; $i < 3; $i++){
+?>		
+			<div class="col-md-2 vaga">
+				<p class="nome-vaga">Atendente de Loja</p>
+                <p class="nome-empresa">Lowell</p>
+                <p class="descricao-vaga">Já pensou em trabalhar na maior empresa do varejo farmacêutico da américa latina, que tem como missão proporcionar cuidado e acolhimento aos seus funcionários e clientes?</p>
+				<p class="salario-vaga"><i class="fas fa-comment-dollar"></i> A combinar</p>
+				<p class="salario-vaga"><i class="fas fa-map-marker-alt"></i> Itapira / SP.</p>
+                <div class="col-md-12 d-grid gap-2">
+					<button type="button" class="btn btn-danger">Ver mais...</button>
+				</div>
+			</div>
+			<div class="col-md-1"></div>
+<?php
+	}
+?>
+		</div>
+	
+	</div>
+</div>
+<!-- CONHEÇA A FATEC-->
+<div class="container">
+	<div class="row" id="portal">
+		<h1 class="h1-portal">CONHEÇA A FATEC</h1>
+		<div class="col-md-8">
+			<br><br>
+			<h4 align="justify">
+				A Fatec de Itapira “Ogari de Castro Pacheco” foi inaugurada no dia 28 de junho de 2014, por meio de um convênio entre Prefeitura Municipal de Itapira e o Centro Estadual de Educação Tecnológica Paula Souza. MISSÃO: Promover a educação superior profissional pública dentro de referenciais de excelência visando o atendimento das demandas sociais e do mundo profissional.
+			</h4><br>
+			<a href="https://www.fatecitapira.edu.br/" target="_blank"><button type="button" class="btn btn-danger">Visitar o site oficial</button></a>
+		</div>
+		<div class="col-md-4">
+			<br>
+			<img src="lib/img/fatec.jpg" alt="fachada-fatec" class="img-fluid rounded">
+		</div>
+	</div>	
+</div>

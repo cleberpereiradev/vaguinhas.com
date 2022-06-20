@@ -1,0 +1,91 @@
+<!-- VAGAS ALUNOS -->
+<div class="container">
+	<br><br>
+	<!-- FORMULÁRIO DE BUSCA DE VAGAS -->
+	<div class="row">
+		<div class="col-md-6">
+			Olá, <b>Instituto Bairral</b>, você está logado, clique no botão ao lado para cadastrar uma nova vaga!
+		</div>		
+		<div class="col-md-4">
+			<div class="col-md-12 d-grid gap-2">
+				<button type="button" class=" btn btn-secondary">CADASTRAR UMA VAGA</button>
+			</div>
+		</div>
+		<div class="col-md-2">
+			<div class="col-md-12 d-grid gap-2">
+				<a href="?pagina=empresas" class=" btn btn-danger">SAIR</a>
+			</div>
+		</div>
+	</div>
+	<hr>
+	<!-- FIM DO FORMULÁRIO DE BUSCA DE VAGAS -->
+	<div class="row">
+		<!-- FILTROS DAS VAGAS -->
+		<div class="col-md-2">
+			<h4 class="text-danger">Filtros</h4>
+			<h5>Cidade</h5>
+			<input type="checkbox" id="itapira">
+			<label for="itapira">Itapira / SP</label><br>
+			<input type="checkbox" id="sp">
+			<label for="sp">São Paulo / SP</label><br>
+			<input type="checkbox" id="limeira">
+			<label for="limeira">Limeira / SP</label><br>
+			<input type="checkbox" id="mogimirim">
+			<label for="mogimirim">Mogi Mirim / SP</label><br>
+			<input type="checkbox" id="mogiguacu">
+			<label for="mogiguacu">Mogi Guaçu / SP</label><br>
+			<a href="#" class="text-danger">Mais</a>
+			<br><br>
+			<h5>Área</h5>
+			<input type="checkbox" id="eng">
+			<label for="eng">Engenharia</label><br>
+			<input type="checkbox" id="vendas">
+			<label for="vendas">Vendas</label><br>
+			<input type="checkbox" id="ti">
+			<label for="ti">T.I.</label><br>
+			<input type="checkbox" id="inf">
+			<label for="inf">Informática</label><br>
+			<input type="checkbox" id="log">
+			<label for="log">Logística</label><br>
+			<a href="#" class="text-danger">Mais</a>
+		</div>
+		<!-- FIM DOS FILTROS DAS VAGAS -->
+		<!-- VAGAS DISPONÍVEIS -->
+		<div class="col-md-10">
+<?php
+	for($i = 0; $i < 3; $i++){
+?>		
+			<div class="mostra-vaga">
+				<div class="row">
+					<div class="col-md-2 icone-vaga">
+						<i class="fas fa-building"></i>
+					</div>
+					<div class="col-md-10">
+						<h1>Técnico de Informática</h1>
+						<small>T.I.</small>
+						<p>Instituto Bairral</p>
+						<p>Requisitos: conhecimento básico em montagem e manutenção de computadores, conhecimento básico em Pacote Microsoft Office e manutenção de impressora.</p>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-3">
+						<i class="fas fa-map-marker-alt"></i> Itapira / SP.
+						<i class="fas fa-clock"></i> 07/06/2022.
+					</div>
+					<div class="col-md-3"></div>
+					<div class="col-md-3 d-grid gap-2">
+						<button type="button" class="btn btn-warning"><i class="fas fa-edit"></i> Editar</button>
+					</div>
+					<div class="col-md-3 d-grid gap-2">
+						<button type="button" class="btn btn-danger"><i class="fas fa-trash"></i> Excluir</button>
+					</div>
+				</div>
+			</div>
+			<br>
+<?php
+	}
+?>		
+		</div>
+		<!-- FIM DAS VAGAS DISPONÍVEIS -->
+	</div>
+</div>

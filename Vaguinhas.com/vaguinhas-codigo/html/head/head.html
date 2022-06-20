@@ -1,0 +1,53 @@
+	<!-- DADOS PRINCIPAIS DO HEAD -->
+	<meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="author" content="Otávio T. F. da Cunha" />
+	<meta name="description" content="Counter Strike Global Offensive" />
+	<meta name="keywords" content="csgo, cs, go, esport" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta name="robots" content="index, follow">
+	<!-- FONTS UTILIZADAS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap" rel="stylesheet">
+	<!-- CSS UTILIZADOS -->
+	<link rel="stylesheet" href="lib/css/fontawesome.css">
+    <link rel="stylesheet" href="lib/css/bootstrap.css" type="text/css">
+	<link rel="stylesheet" href="lib/css/style.css" type="text/css">
+<?php
+	if($_GET['pagina'] == "empresas" || $_GET['pagina'] == "cadastroEmpresa" || $_GET['pagina'] == "loginEmpresa" || $_GET['pagina'] == "vagasEmpresa"){
+?>
+	<link rel="stylesheet" href="lib/css/style-empresas.css" type="text/css">
+<?php		
+	}
+?>	
+	<!-- JS UTILIZADO -->
+	<script src="lib/js/jquery.js"></script>
+    <script src="lib/js/popper.js"></script>
+    <script src="lib/js/bootstrap.js"></script>
+	<script src="lib/js/fontawesome.js"></script>
+	<script src="lib/js/mascarasCampos.js"></script>
+	<!-- VALIDADOR DE CPF -->
+	<script src="lib/js/mask.js"></script>
+	<script src="lib/js/cpf_cnpj.js"></script>
+	<script>
+		var options = {
+			onKeyPress: function (cpf, ev, el, op) {
+				var masks = ['000.000.000-000', '00.000.000/0000-00'];
+				$('.cpfOuCnpj').mask((cpf.length > 14) ? masks[1] : masks[0], op);
+			}
+	
+		}
+		window.onload = function() {
+			var tamanho = $(".cpfOuCnpj").val().length;
+			if(tamanho > 14){
+				$('.cpfOuCnpj').mask('00.000.000/0000-00', options);
+			}else{
+				$('.cpfOuCnpj').mask('000.000.000-00', options);
+			}
+		}
+	</script>
+	<!-- FAVICON -->
+	<link rel="shortcut icon" href="lib/img/favicon.ico" type="image/x-icon" />
+    <title>Vaguinhas</title>

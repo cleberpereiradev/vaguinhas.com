@@ -1,0 +1,77 @@
+<?php
+	if(isset($_GET['pagina'])){
+		if($_GET['pagina'] == "principal"){
+			$active['principal'] = "active";
+			$active['empresas'] = "";			
+			$active['vagas'] = "";
+			$linkPortal = "#portal";
+		}elseif($_GET['pagina'] == "empresas" || $_GET['pagina'] == "cadastroEmpresa" || $_GET['pagina'] == "loginEmpresa"){
+			$active['principal'] = "";
+			$active['empresas'] = "active";			
+			$active['vagas'] = "";
+			$linkPortal = "#portal";
+		}elseif($_GET['pagina'] == "vagas" || $_GET['pagina'] == "vagasEmpresa"){
+			$active['principal'] = "";
+			$active['empresas'] = "";			
+			$active['vagas'] = "active";
+			$linkPortal = "?pagina=principal#portal";
+		}else{
+			$active['principal'] = "active";
+			$active['empresas'] = "";			
+			$active['vagas'] = "";
+			$linkPortal = "#portal";
+		}	
+	}else{
+		$active['principal'] = "active";
+		$active['empresas'] = "";
+		$active['vagas'] = "";
+		$linkPortal = "#portal";
+	}
+
+?>
+
+<nav class="navbar navbar-expand-lg">
+	<div class="container">
+		<a class="navbar-brand" href="?pagina=principal">
+<?php
+	if($_GET['pagina'] == "empresas" || $_GET['pagina'] == "cadastroEmpresa" || $_GET['pagina'] == "loginEmpresa" || $_GET['pagina'] == "vagasEmpresa"){
+?>
+			<img class="imglogo img-fluid" src="lib/img/logo_f_azul.png" alt="Logotipo Vaguinhas"></img>
+<?php		
+	}else{
+?>		
+			<img class="imglogo img-fluid" src="lib/img/logo_f_vermelho.png" alt="Logotipo Vaguinhas"></img>
+<?php		
+	}
+?>			
+		</a>
+		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
+			<ul class="navbar-nav me-auto mb-2 mb-lg-0 ">
+				<li class="nav-item">
+					<a class="nav-link <?php echo $active['principal'] ?>" aria-current="page" href="?pagina=principal">Alunos</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link <?php echo $active['empresas'] ?>" href="?pagina=empresas">Empresas</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="https://www.fatecitapira.edu.br/" target="_blank">Conheça a Fatec</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="<?php echo $linkPortal ?>">Conheça o Portal</a>
+				</li>
+<?php
+	if($_GET['pagina'] == "vagas" || $_GET['pagina'] == "vagasEmpresa"){
+?>				
+				<li class="nav-item">
+					<a class="nav-link <?php echo $active['vagas'] ?>" href="?pagina=vagas">Vagas</a>
+				</li>
+<?php
+	}
+?>
+			</ul>      
+		</div>
+	</div>
+</nav>

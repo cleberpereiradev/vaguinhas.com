@@ -1,0 +1,231 @@
+body{
+    background-color: #eceae7;  
+	font-family: 'Montserrat', sans-serif;	
+	overflow-x: hidden;
+}
+/* Pagina Alunos */
+/* Menu de Navegação */
+.imglogo{
+    height: 76px;
+}
+.navbar{
+	background-color: #be1e10;
+	color: #fff;  
+	padding: 0;
+	border-bottom: 0.5px solid #f0685c;
+}
+.navbar ul{
+	color: #fff;
+	text-align: center;
+	font-size: 1.2em;
+	margin-left: 40px;
+}
+.navbar ul li{
+	color: #fff;
+	text-align: center;
+	padding: 15px;
+	font-weight: bold;
+}
+.navbar ul li a{
+	color: #fff;
+}
+.navbar ul li a:hover{
+	color: #2e3e46;
+}
+.navbar-nav .nav-link.active {
+  color: #fff;
+}
+.navbar ul li .active{
+	color: #fff;
+	border-bottom: 2px solid #2e3e46;
+}
+
+/* Banner dos Alunos */
+
+.banner-alunos{
+    background-color: #be1e10;
+    background-image: url('../img/man-studying_escuro.jpg');
+    background-repeat: no-repeat;
+    background-position: right;
+    height: 550px;
+	overflow: hidden;
+}
+@media(max-width: 1600px){
+	.banner-alunos{
+		background-image: url('../img/man-studying_escuro.jpg');
+	}
+}
+.search {
+    padding: 5px;
+    font-size: 17px;
+    border: 2px solid white;
+    border-radius: 38px;
+    color: #b00b18;
+    margin-left: 100px;
+    height: 50px;
+    width: 500px;    
+}
+.esquerda {
+    width: 220%;
+    position: relative;
+    height: 50px;
+    margin-left: 15%;    
+	margin-top: 5%;      
+}
+.img-lupa{
+    width: 25px;
+}
+.input-search {
+    height: 50px;
+    border: none;
+    outline: none;
+    padding-left: 50px;
+    width:0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: none;
+    z-index: 3;
+    transition: width ease-out;
+    cursor: pointer;       
+}
+.input-search:focus { 
+    border: 1px solid #fff;
+    border-radius: 25px;
+    width: 30%;
+    z-index: 1;
+    transition: width 1s ease-in;       
+    background-color: #fff;
+}
+.btn-search { 
+    height: 50px;
+    width: 50px;
+    background:  url()  center no-repeat;
+    border: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    cursor: pointer;
+    background-color: #fff;
+    border-radius: 35px;
+}
+.btn-search:focus {
+    outline: none;
+}
+
+/* Conteúdo do Site */
+#portal{
+	padding-bottom: 50px;
+}
+.h1-portal{
+    color: black;
+    padding-top: 75px;
+    text-align: center;
+    font-size: 40px;
+}
+.h2-portal{
+    color: black;
+    margin-top: 115px;
+    margin-right: 100px;
+    margin-left: 100px;
+    text-align: center;
+    font-size: 27px;
+}
+
+/* Vagas do Site */
+.banner-vagas{
+    background-color: #be1e10;
+	padding-bottom: 50px;
+}
+.banner-vagas h1{
+    color: #fff;
+    padding-top: 4%;
+    text-align: center;
+    font-size: 300%;
+}
+.vaga{
+    text-align: center;
+    color: #000;
+    background-color: #fff;
+    padding: 15px;
+	margin-top: 15px;
+}
+.nome-vaga{
+    font-weight: bold;
+    font-size: 140%;
+}
+.nome-empresa{
+    font-weight: bold;
+    font-size: 90%;
+}
+.descricao-vaga{
+    text-align: left;
+    font-size: 83%;
+    font-weight: bold;
+    margin-top: 10%;
+	text-align: justify;
+}
+.salario-vaga{
+    font-weight:bold;
+    text-align: left;
+    font-size: 1.1em;
+}
+
+/* Rodapé */
+.rodape{
+    background-color: #be1e10;
+	padding-top: 50px;
+	color: #fff;
+}
+
+/* Cadastro Aluno */
+.cadastro{
+	border-radius: 15px;
+	background-color: #be1e10;
+	color: #fff;
+	margin-top: 5%;
+	margin-bottom: 10%;
+	padding: 5%;
+}
+.cadastro a{
+	color: #fff;
+	text-decoration: none;
+}
+.cadastro a:hover{
+	color: #2e3e46;
+	text-decoration: none;
+}
+.btn-secondary{
+	color: #be1e10 !important;
+	background-color: #fff;
+	border: 1px #d1d1d1 solid;
+}
+
+/* Vagas */
+.mostra-vaga{
+	background-color: #fff;
+	padding: 5%;
+}
+.mostra-vaga h1{
+	color: #be1e10;
+	font-weight: bold;
+	font-size: 1.2em;
+}
+.mostra-vaga small{
+	font-weight: bold;
+	font-size: 0.8em;
+}
+.icone-vaga{
+	font-size: 5em;
+}
+.local-vaga{
+	text-align: center;
+	font-weight: bold;
+	font-size: 0.8em;
+}
+.data-vaga{
+	text-align: right;
+	font-weight: bold;
+	font-size: 0.8em;
+}

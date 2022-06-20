@@ -1,0 +1,31 @@
+<!-- CADASTRO EMPRESA -->
+<div class="container">
+	<div class="row">
+		<div class="col-md-3"></div>
+		<div class="col-md-6 cadastro">
+			<h1>Junte-se a nós</h1><hr>
+			<form method="post" action="?pagina=loginEmpresa">
+				<label for="email" class="form-label">E-mail</label>
+				<input type="email" class="form-control" name="email" id="email" placeholder="fulano@fatec.sp.gov.br" required>
+				<br>
+				<label for="nome" class="form-label">Nome da empresa</label>
+				<input type="text" class="form-control" name="nome" id="nome" placeholder="Fatec Itapira" required>
+				<br>
+				<label for="tel" class="form-label">Telefone para contato</label>
+				<input type="text" class="form-control" name="tel" id="tel" placeholder="(19) 00000-0000" onkeypress="javascript: mascara(this, cel_mask);" maxlength="15" required>
+				<br>
+				<label for="senha" class="form-label">Senha</label>
+				<input type="password" class="form-control" name="senha" id="senha" placeholder="********" required>
+				<br>
+				<label for="cpf" class="form-label">CPF/CNPJ</label>
+				<input type="text" class="form-control cpfOuCnpj cpf_cnpj" name="cpf" id="cpf" placeholder="00.000.000/0001-00" required>
+				<hr>
+				<div class="col-md-12 d-grid gap-2">
+					<button type="submit" class="btn btn-outline-light">CADASTRAR</button>
+				</div>
+			</form>
+		</div>
+		<div class="col-md-3"></div>
+	</div>	
+</div>
+
