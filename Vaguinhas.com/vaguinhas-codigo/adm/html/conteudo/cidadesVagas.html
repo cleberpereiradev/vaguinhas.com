@@ -1,0 +1,157 @@
+<div class="content-wrapper">
+	<!-- Conteúdo -->
+	<section class="content">
+		<div class="row">
+			<div class="col-md-7">
+				<div class="box box-danger">
+					<div class="box-header">
+						<div class="row">
+							<div class="col-sm-12">
+								<h3 style="text-align: center; color: #4f98c2;"><i class="fas fa-city"></i> <B>Cidades</B></h3>
+							</div>
+						</div>
+					<hr>
+						<p align="justify"></p>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-5">
+				<div class="box box-danger">
+					<div class="box-header">
+						<div class="row">
+							<div class="col-sm-6">
+								<a href="?pagina=principal"><button type="button" class="butao-vermelho"><i class="fas fa-arrow-left"></i><br>Voltar</button></a>
+							</div>
+							<div class="col-sm-6">
+								<button type="button" class="butao-verde" data-toggle="modal" data-target="#adicionarCidade"><i class="fas fa-plus"></i><br> Cadastrar Cidade</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="box box-danger">
+			<div class="box-body chat" id="chat-box">
+				<div class="row form-group">
+					<div class="col-sm-12">
+					
+						<!-- Modal Cadastrar Cidade -->
+						<div class="modal" id="adicionarCidade">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-body">
+										<form action="includes/cadastrarCidade.php" method="post" enctype="multipart/form-data">
+											<div class="row form-group">
+												<div class="col-sm-6">
+													<label>Nome da Cidade:</label><br>
+													<input type="text" class="form-control" name="nome" maxlength="150" placeholder="Itapira">
+												</div>
+												<div class="col-sm-6">
+													<label>Estado:</label><br>
+													<input type="text" class="form-control" name="estado" maxlength="2" placeholder="SP">
+												</div>
+											</div>
+											<div class="row form-group">
+												<div class="col-sm-12 text-right">
+													<button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times"></i> Fechar</button>
+													<button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Salvar</button>
+												</div>
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- FIM Modal Cadastrar Cidade -->
+
+					</div>
+				</div>
+				<table class="table table-hover table-sm">
+					<thead>
+						<tr>
+							<th>Id</th>
+							<th>Nome</th>
+							<th>Estado</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+<?php
+			$sqlCidades = "SELECT * FROM cidades";
+			$resultadoCidades = mysqli_query($conexao, $sqlCidades);
+			$nlTipoCidades = mysqli_num_rows($resultadoCidades);
+			if($nlTipoCidades > 0){
+				while($Cidades = mysqli_fetch_array($resultadoCidades)){
+					
+?>
+						<tr>
+							<td><?php echo $Cidades['id'] ?></td>
+							<td><?php echo $Cidades['nome'] ?></td>
+							<td><?php echo $Cidades['estado'] ?></td>
+							<td>
+								<button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editarCidade_<?php echo $Cidades['id'] ?>"><i class="fas fa-edit"></i></button>
+								<button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#excluirCidade_<?php echo $Cidades['id'] ?>"><i class="fas fa-trash-alt"></i></button>
+							</td>
+						</tr>
+
+						<div class="modal" id="excluirCidade_<?php echo $Cidades['id'] ?>">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-body">
+										<form action="includes/excluirCidade.php" method="post" enctype="multipart/form-data">
+											<input type="hidden" name="id" value="<?php echo $Cidades['id'] ?>">
+											<div class="row form-group">
+												<div class="col-sm-12 text-center">
+													<h5>Deseja realmente excluir esta cidade dos filtros?</h5>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-sm-12 text-right">
+													<button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times"></i> Fechar</button>
+													<button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i> Excluir</button>
+												</div>
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="modal" id="editarCidade_<?php echo $Cidades['id'] ?>">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-body">
+										<form action="includes/editarCidade.php" method="post" enctype="multipart/form-data">
+											<input type="hidden" name="id" value="<?php echo $Cidades['id'] ?>">
+											<div class="row form-group">
+												<div class="col-sm-6">
+													<label>Nome da Cidade:</label><br>
+													<input type="text" class="form-control" name="nome" value="<?php echo $Cidades['nome'] ?>" maxlength="150">
+												</div>
+												<div class="col-sm-6">
+													<label>Estado:</label><br>
+													<input type="text" class="form-control" name="estado" value="<?php echo $Cidades['estado'] ?>" maxlength="2">
+												</div>
+											</div>
+											<div class="row form-group">
+												<div class="col-sm-12 text-right">
+													<button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times"></i> Fechar</button>
+													<button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Salvar</button>
+												</div>
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+
+<?php
+				}
+			}
+?>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</section>
+</div>

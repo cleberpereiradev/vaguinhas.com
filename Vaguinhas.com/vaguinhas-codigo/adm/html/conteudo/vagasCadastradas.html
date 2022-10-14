@@ -1,0 +1,97 @@
+<div class="content-wrapper">
+	<!-- Conteúdo -->
+	<section class="content">
+		<div class="row">
+			<div class="col-md-7">
+				<div class="box box-danger">
+					<div class="box-header">
+						<div class="row">
+							<div class="col-sm-12">
+								<h3 style="text-align: center; color: #4f98c2;"><i class="fas fa-concierge-bell"></i> <B>Vagas Cadastradas</B></h3>
+							</div>
+						</div>
+					<hr>
+						<p align="justify"></p>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-5">
+				<div class="box box-danger">
+					<div class="box-header">
+						<div class="row">
+							<div class="col-sm-6">
+								<a href="?pagina=principal"><button type="button" class="butao-vermelho"><i class="fas fa-arrow-left"></i><br>Voltar</button></a>
+							</div>
+							
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="box box-danger">
+			<div class="box-body chat" id="chat-box">
+				<table class="table table-hover table-sm">
+					<thead>
+						<tr>
+							<th>Id</th>
+							<th>Nome</th>
+							<th>Empresa</th>
+							<th>Tipo</th>
+							<th>Data</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+<?php
+			$sql = "SELECT * FROM vagas";
+			$resultado = mysqli_query($conexao, $sql);
+			$nl = mysqli_num_rows($resultado);
+			if($nl > 0){
+				while($linha = mysqli_fetch_array($resultado)){
+				
+					$sqlDados = "SELECT * FROM empresas WHERE id='". $linha['empresas_id'] ."'";
+					$resultadoDados = mysqli_query($conexao, $sqlDados);
+					$Dados = mysqli_fetch_array($resultadoDados);
+					
+					$sqlTipo = "SELECT * FROM tipos_vagas WHERE id='". $linha['tipos_vagas_id'] ."'";
+					$resultadoTipo = mysqli_query($conexao, $sqlTipo);
+					$Tipo = mysqli_fetch_array($resultadoTipo);
+					
+					if($linha['ativo'] == 0){
+						$ativarUsuario = "
+							<form method='post' action='includes/ativarVaga.php'>
+								<input type='hidden' name='id' value='". $linha['id'] ."'>
+								<input type='hidden' name='ativo' value='1'>
+								<button type='submit' class='btn btn-success btn-sm'><i class='fas fa-check-circle'></i> Ativar</button>
+							</form>
+						";
+					}else{
+						$ativarUsuario = "
+							<form method='post' action='includes/ativarVaga.php'>
+								<input type='hidden' name='id' value='". $linha['id'] ."'>
+								<input type='hidden' name='ativo' value='0'>
+								<button type='submit' class='btn btn-warning btn-sm'><i class='fas fa-times-circle'></i> Desativar</button>
+							</form>
+						";
+					}
+					
+?>
+						<tr>
+							<td><?php echo $linha['id'] ?></td>
+							<td><?php echo $linha['nome'] ?></td>
+							<td><?php echo $Dados['nome'] ?></td>
+							<td><?php echo ucfirst($Tipo['tipo']) ?></td>
+							<td><?php echo date("d/m/Y", strtotime($linha['data'])) ?></td>
+							<td><?php echo $ativarUsuario ?></td>
+						</tr>
+
+<?php
+				}
+			}
+?>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</section>
+</div>

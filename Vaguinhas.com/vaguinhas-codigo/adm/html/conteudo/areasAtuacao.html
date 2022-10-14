@@ -1,0 +1,147 @@
+<div class="content-wrapper">
+	<!-- Conteúdo -->
+	<section class="content">
+		<div class="row">
+			<div class="col-md-7">
+				<div class="box box-danger">
+					<div class="box-header">
+						<div class="row">
+							<div class="col-sm-12">
+								<h3 style="text-align: center; color: #4f98c2;"><i class="fas fa-chalkboard-teacher"></i> <B>Áreas de Atuação</B></h3>
+							</div>
+						</div>
+					<hr>
+						<p align="justify"></p>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-5">
+				<div class="box box-danger">
+					<div class="box-header">
+						<div class="row">
+							<div class="col-sm-6">
+								<a href="?pagina=principal"><button type="button" class="butao-vermelho"><i class="fas fa-arrow-left"></i><br>Voltar</button></a>
+							</div>
+							<div class="col-sm-6">
+								<button type="button" class="butao-verde" data-toggle="modal" data-target="#adicionar"><i class="fas fa-plus"></i><br> Cadastrar Área de Atuação</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="box box-danger">
+			<div class="box-body chat" id="chat-box">
+				<div class="row form-group">
+					<div class="col-sm-12">
+					
+						<!-- Modal Cadastrar -->
+						<div class="modal" id="adicionar">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-body">
+										<form action="includes/cadastrarAreasAtuacao.php" method="post" enctype="multipart/form-data">
+											<div class="row form-group">
+												<div class="col-sm-12">
+													<label>Nome da Área:</label><br>
+													<input type="text" class="form-control" name="nome" maxlength="150" placeholder="Engenharia">
+												</div>
+											</div>
+											<div class="row form-group">
+												<div class="col-sm-12 text-right">
+													<button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times"></i> Fechar</button>
+													<button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Salvar</button>
+												</div>
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- FIM Modal Cadastrar -->
+
+					</div>
+				</div>
+				<table class="table table-hover table-sm">
+					<thead>
+						<tr>
+							<th>Id</th>
+							<th>Nome</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+<?php
+			$sqlAreasAtuacao = "SELECT * FROM areas_atuacao";
+			$resultadoAreasAtuacao = mysqli_query($conexao, $sqlAreasAtuacao);
+			$nlAreasAtuacao = mysqli_num_rows($resultadoAreasAtuacao);
+			if($nlAreasAtuacao > 0){
+				while($AreasAtuacao = mysqli_fetch_array($resultadoAreasAtuacao)){
+					
+?>
+						<tr>
+							<td><?php echo $AreasAtuacao['id'] ?></td>
+							<td><?php echo $AreasAtuacao['nome'] ?></td>
+							<td>
+								<button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editarAreasAtuacao_<?php echo $AreasAtuacao['id'] ?>"><i class="fas fa-edit"></i></button>
+								<button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#excluirAreasAtuacao_<?php echo $AreasAtuacao['id'] ?>"><i class="fas fa-trash-alt"></i></button>
+							</td>
+						</tr>
+
+						<div class="modal" id="excluirAreasAtuacao_<?php echo $AreasAtuacao['id'] ?>">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-body">
+										<form action="includes/excluirAreasAtuacao.php" method="post" enctype="multipart/form-data">
+											<input type="hidden" name="id" value="<?php echo $AreasAtuacao['id'] ?>">
+											<div class="row form-group">
+												<div class="col-sm-12 text-center">
+													<h5>Deseja realmente excluir esta área de atuação dos filtros?</h5>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-sm-12 text-right">
+													<button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times"></i> Fechar</button>
+													<button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i> Excluir</button>
+												</div>
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="modal" id="editarAreasAtuacao_<?php echo $AreasAtuacao['id'] ?>">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-body">
+										<form action="includes/editarAreasAtuacao.php" method="post" enctype="multipart/form-data">
+											<input type="hidden" name="id" value="<?php echo $AreasAtuacao['id'] ?>">
+											<div class="row form-group">
+												<div class="col-sm-12">
+													<label>Nome da Área:</label><br>
+													<input type="text" class="form-control" name="nome" value="<?php echo $AreasAtuacao['nome'] ?>" maxlength="150">
+												</div>
+											</div>
+											<div class="row form-group">
+												<div class="col-sm-12 text-right">
+													<button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times"></i> Fechar</button>
+													<button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Salvar</button>
+												</div>
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+
+<?php
+				}
+			}
+?>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</section>
+</div>

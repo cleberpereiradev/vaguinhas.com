@@ -1,0 +1,239 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+	<head>
+		<?php include "html/head/head.html" ?>
+		<!--
+		<link href="lib/css/estilo.css" rel="stylesheet">
+		<link rel="shortcut icon" type="imagem/png" href="lib/img/icon.png"/>
+		<style>
+			.login{
+			background-color: #fff;
+			width: 400px;
+			border-radius: 5px;
+			padding: 5px 50px 5px 50px;
+			}
+		</style>
+	-->
+	</head>
+	<!-- b -->
+	
+	<body style="background-color: #fff; background-image: url(lib/img/fundo_login.jpg); background-size: 100%; background-repeat: no-repeat;">
+	<br><br><br>
+		<div class="row">
+			<div class="col-sm-5">
+			</div>
+			<div class="col-sm-2" style="margin: 10px; background: rgba(255, 255, 255, 0.8)">
+				<br><br>
+				<div class="row form-group">
+					<div class="col-sm-12 text-center">
+						<img src="lib/img/logotipo.png" class="figure-img img-fliud" width="200px">
+					</div>
+				</div>
+				<form class="form-signin" method="post" action="includes/sessao.php">
+	<?php
+				if(isset($nome) || isset($valor)){
+					foreach ($nome as $key1 => $value1) {
+						echo "<input type='hidden' name='parametroNome[]' value='$value1'>";
+					}
+
+					foreach ($valor as $key2 => $value2) {
+						echo "<input type='hidden' name='parametroValor[]' value='$value2'>";
+					}
+				}
+	?>
+
+
+					<div class="row form-group">
+						<div class="col-sm-12">
+							<!-- <label for="exampleDropdownFormEmail1">Login:</label> -->
+							<input type="text" class="form-control" name="login" placeholder="Login" required autofocus>
+						</div>
+					</div>
+					<div class="row form-group">
+						<div class="col-sm-12">
+							<!-- <label for="exampleDropdownFormPassword1">Senha:</label> -->
+							<input type="password" class="form-control" name="senha" placeholder="Senha" required>
+						</div>
+					</div>
+					<div class="row form-group">
+						<div class="col-sm-12">
+							<button type="submit" class="btn btn-primary btn-block btn-sm">Entrar</button>
+						</div>
+					</div>
+					<div class="dropdown-divider"></div>
+					<!--
+					<a class="dropdown-item" href="senha.php" style="font-size: 14px;">Esqueceu a senha?</a>
+					<a class="dropdown-item" href="#novoUsuario" data-toggle="modal" style="font-size: 14px;">Crie sua conta</a>
+					-->
+
+				</form>
+				<div class="col-sm-12 text-center">
+					<p style="padding-top:30px; font-size: 14px;">Criado e desenvolvido por<br> <strong><a href="http://www.isistecnologia.com.br" target="_blank">Isis Tecnologia &reg; <?php echo date('Y'); ?>.</a></strong></p>
+				</div>
+			</div>
+			<div class="col-sm-5">
+			</div>
+		</div>
+			<div class="modal fade" id="recuperarSenha" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLabel">Recuperar Senha</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							<form class="form-group" method="post" action="includes/enviarEmail.php">
+								<div class="row">
+									<div class="col-md-12">
+										<label>Digite seu email: </label>
+										<input type="email" name="email"  class="form-control" placeholder="Email" required autofocus>
+									</div>
+
+								</div><br>
+								<div class="row">
+									<div class="col-md-8">
+									</div>
+									<div class="col-md-4 text-right">
+										<button class="btn btn-primary btn-block" type="submit">Enviar</button>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+				<div class="modal fade" id="novoUsuario" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+					<div class="modal-dialog modal-lg">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="exampleModalLabel">Criar Usuário</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								<div class="row">
+									<div class="col-sm-1">
+									</div>
+									<div class="col-sm-10">
+										<form action="includes/novoUsuario.php" method="post">
+											<div class="row form-group">
+												<div class="col-sm-12">
+													<label>Nome completo:</label>
+													<input type="text" name="nome" id="nome" onkeypress="semApostrofo(nome);" class="form-control" required>
+												</div>
+											</div>
+
+											<div class="row form-group">
+												<div class="col-sm-12">
+													<label>E-mail:</label>
+													<input type="email" name="email" id="email" onkeypress="semApostrofo(email);" class="form-control" required>
+												</div>
+											</div>
+
+											<div class="row form-group">
+												<div class="col-sm-6">
+													<label>Telefone:</label>
+													<input type="text" name="telefone" onkeyup="mascara(this, tel_mask)" maxlength="14" class="form-control" required>
+												</div>
+												<div class="col-sm-6">
+													<label>Celular:</label>
+													<input type="text" name="celular" onkeyup="mascara(this, cel_mask)" maxlength="16" class="form-control" required>
+												</div>
+											</div>
+											<div class="row form-group">
+												<div class="col-sm-6">
+													<label>Local de trabalho: </label>
+													<select class="form-control custom-select" onchange="carregaSetor(this.value, 'resultadoSetor');" name="local" required>
+														<option value=""></option>
+														<option value="1">Escritório</option>
+														<option value="2">Obras</option>
+													</select>
+												</div>
+
+												<div class="col-sm-6">
+													<div id="resultadoSetor">
+
+													</div>
+												</div>
+											</div>
+
+											<div class="row form-group">
+												<div class="col-sm-6">
+													<label>Login:</label>
+													<input type="text" name="login" id="login" onkeypress="semApostrofo(login);" class="form-control" required>
+												</div>
+											</div>
+
+											<div class="row form-group">
+												<div class="col-sm-6">
+													<label>Senha:</label>
+													<input type="password" name="senha" class="form-control" required>
+												</div>
+											</div>
+											<div class="row form-group">
+												<div class="col-sm-6">
+													<label>Repita a senha:</label>
+													<input type="password" name="repetirSenha" class="form-control" required>
+												</div>
+											</div>
+											<div class="modal-footer">
+												<div class="row form-group">
+													<div class="col-sm-12 text-right">
+														<button type="submit" class="btn btn-primary btn-block">Enviar</button>
+													</div>
+												</div>
+											</div>
+										</form>
+									</div>
+									<div class="col-sm-1">
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-sm-12">
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-12">
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+<?php
+
+?>
+				<script language="javascript" type="text/javascript">
+				/*
+					function tipoAltera(){
+						var tipo = document.getElementById('valorArt'),
+				    	tipoFinal = tipo.value;
+						if(tipoFinal == "1"){
+							document.getElementById("resp").innerHTML="<label>Setor: </label><select class='form-control custom-select' name='setor' required><option value=''></option><option value='1'>Administrativo</option><option value='2'>Marketing</option><option value='3'>Administrativo</option><option value='4'>Financeiro</option><option value='5'>Recursos Humanos</option></select>";
+						}else if(tipoFinal == "2"){
+							document.getElementById("resp").innerHTML="";
+						}else{
+							document.getElementById("resp").innerHTML="";
+						}
+					}*/
+				</script>
+
+
+		<!-- Bootstrap core JavaScript
+			================================================== -->
+		<!-- Placed at the end of the document so the pages load faster -->
+		<script src="lib/js/Popper.js"></script>
+		<script src="lib/js/jquery1113.js"></script>
+		<script>window.jQuery || document.write('<script src="lib/js/jquery1113.js"><\/script>')</script>
+		<script src="lib/js/bootstrap.js"></script>
+		<script src="lib/js/opt.js" type="text/javascript"></script>
+		<script type="text/javascript" src="lib/cep/cep.js"></script>
+	</body>
+</html>

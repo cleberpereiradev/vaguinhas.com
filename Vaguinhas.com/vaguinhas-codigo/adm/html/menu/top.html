@@ -1,0 +1,51 @@
+<?php
+
+    include "includes/servidor.php";
+
+    if($_SESSION['UsuarioNivel'] == 2){
+        $icone = "<i class='fas fa-user-ninja'></i>";
+    }else{
+        $icone = "<i class='fa fa-user'></i>";
+    }
+
+?>
+<!-- Header Navbar -->
+<nav class="navbar navbar-static-top azul-degrade" role="navigation">
+	<a href="#" data-toggle="offcanvas" role="button" style="color: #ffff;">
+		<i class="fas fa-bars"></i>
+    </a>
+    <div class="col">
+
+    </div>
+    <div class="col text-right">
+        <!-- Menu alinhado à direita -->
+        <div class="navbar-custom-menu">
+			<div class="dropdown">
+				<button class="btn btn-secondary dropdown-toggle btn-sm" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <?php echo $icone ." ". $_SESSION['UsuarioLogin'] ?>
+                </button>
+				<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+					<a class="dropdown-item" href="includes/logout.php">Sair</a>
+				</div>
+			</div>
+        </div>
+    </div>
+<!-- </div>-->
+</nav>
+<script type="text/javascript">
+    $('.dropdown-menu').on('click', function(event) {
+        event.stopPropagation();
+    });
+
+    $('.selectpicker').selectpicker({
+        container: 'body'
+    });
+
+    $('body').on('click', function(event) {
+        var target = $(event.target);
+        if (target.parents('.bootstrap-select').length) {
+            event.stopPropagation();
+            $('.bootstrap-select.open').removeClass('open');
+        }
+    });
+</script>

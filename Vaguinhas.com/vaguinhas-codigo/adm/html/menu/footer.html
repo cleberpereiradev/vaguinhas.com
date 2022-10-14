@@ -1,0 +1,44 @@
+	<!-- RODAPÉ -->
+	<footer class="main-footer">
+		<!-- ESQUERDA -->
+		<div class="row align-items-center">
+			<div class="col-sm-6 text-center">
+				<small>Criado e desenvolvido por <strong><a href="http://www.isistecnologia.com.br" target="_blank">Isis Tecnologia Ltda. &reg; <?php echo date('Y') ?></a></strong> - Todos os direitos reservados.</small>
+			</div>
+			<div class="col-sm-6 text-right">
+				<a href="http://www.isistecnologia.com.br" target="_blank"><img src="http://isistecnologia.com.br/lib/img/logotipo.png" class="img-fluid" width="30px"></img></a>
+			</div>
+		</div>
+	</footer>
+	<script type="text/javascript">
+		//Scrpits para modal do video promocional do cidades d Italia Guaçu
+
+		//ABRE O MODAL AUTOMATICAMENTE AO CARREGAR A PÁGINA
+
+		$(window).load(function() {
+			$('#videoPromocao').modal('show');
+		});
+
+		/*
+		//FECHA O MODAL AUTOMATICAMENTE DEPOIS DE X SEGUNDOS
+		setTimeout(function() {
+			$('#videoPromocao').modal('hide');
+		}, 30000); // 30000 = 3 segundos
+		*/
+	</script>
+	<script>
+		$('textarea').summernote({
+		  tabsize: 2,
+		  height: 100,
+		  toolbar: [
+              [ 'style', [ 'style' ] ],
+              [ 'font', [ 'bold', 'italic', 'underline', 'strikethrough', 'superscript', 'subscript', 'clear'] ],
+              [ 'fontname', [ 'fontname' ] ],
+              [ 'fontsize', [ 'fontsize' ] ],
+              [ 'color', [ 'color' ] ],
+              [ 'para', [ 'ol', 'ul', 'paragraph', 'height' ] ],
+              [ 'table', [ 'table' ] ],
+              [ 'insert', [ 'link'] ]
+          ]
+		});
+	</script>
