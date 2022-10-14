@@ -34,12 +34,18 @@
 	<div class="container">
 		<a class="navbar-brand" href="?pagina=principal">
 <?php
-	if($_GET['pagina'] == "empresas" || $_GET['pagina'] == "cadastroEmpresa" || $_GET['pagina'] == "loginEmpresa" || $_GET['pagina'] == "vagasEmpresa"){
+	if(isset($_GET['pagina'])){
+		if($_GET['pagina'] == "empresas" || $_GET['pagina'] == "cadastroEmpresa" || $_GET['pagina'] == "loginEmpresa" || $_GET['pagina'] == "vagasEmpresa"){
 ?>
 			<img class="imglogo img-fluid" src="lib/img/logo_f_azul.png" alt="Logotipo Vaguinhas"></img>
 <?php		
-	}else{
+		}else{
 ?>		
+			<img class="imglogo img-fluid" src="lib/img/logo_f_vermelho.png" alt="Logotipo Vaguinhas"></img>
+<?php		
+		}
+	}else{
+?>
 			<img class="imglogo img-fluid" src="lib/img/logo_f_vermelho.png" alt="Logotipo Vaguinhas"></img>
 <?php		
 	}
@@ -63,12 +69,26 @@
 					<a class="nav-link" href="<?php echo $linkPortal ?>">Conheça o Portal</a>
 				</li>
 <?php
-	if($_GET['pagina'] == "vagas" || $_GET['pagina'] == "vagasEmpresa"){
+	if(isset($_SESSION['UsuarioID'])){
+		if($_SESSION['UsuarioTipo'] == "fatec"){
 ?>				
+				<li class="nav-item">
+					<a class="nav-link <?php echo $active['vagas'] ?>" href="?pagina=loginFatec">Adm Fatec</a>
+				</li>
+<?php
+		}elseif($_SESSION['UsuarioTipo'] == "empresa"){
+?>
+				<li class="nav-item">
+					<a class="nav-link <?php echo $active['vagas'] ?>" href="?pagina=vagasEmpresa">Suas Vagas</a>
+				</li>
+<?php			
+		}else{
+?>
 				<li class="nav-item">
 					<a class="nav-link <?php echo $active['vagas'] ?>" href="?pagina=vagas">Vagas</a>
 				</li>
-<?php
+<?php			
+		}
 	}
 ?>
 			</ul>      

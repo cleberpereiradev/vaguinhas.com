@@ -178,15 +178,19 @@ body{
 	padding-top: 50px;
 	color: #fff;
 }
+.rodape a{
+	color: #fff;
+}
 
 /* Cadastro Aluno */
 .cadastro{
 	border-radius: 15px;
 	background-color: #be1e10;
 	color: #fff;
-	margin-top: 5%;
-	margin-bottom: 10%;
-	padding: 5%;
+	margin-top: 2%;
+	margin-bottom: 2%;
+	padding: 2%;
+	font-weight: bold;
 }
 .cadastro a{
 	color: #fff;

@@ -1,88 +1,542 @@
+<?php
+	
+	include "includes/servidor.php";
+	
+	$sqlEmpresa = "SELECT * FROM empresas WHERE id='". $_SESSION['UsuarioEmpresasID'] ."'";
+	$resultadoEmpresa = mysqli_query($conexao, $sqlEmpresa);
+	$nlEmpresa = mysqli_num_rows($resultadoEmpresa);
+	
+	if($nlEmpresa > 0){
+		$Empresa = mysqli_fetch_array($resultadoEmpresa);
+	}else{
+		echo "<script type='text/javascript' charset='utf-8'> alert('O seu cadastro n\u00e3o foi localizado!'); window.location.href='includes/logout.php'; </script>";
+	}
+	
+	$filtroCidades = array();
+	$filtroAreasAtuacao = array();
+	$fCid = "";
+	$fAreAtu = "";
+	
+	if(isset($_POST['cidades'])){
+		if(count($_POST['cidades']) > 0){
+			foreach($_POST['cidades'] as $item){
+				array_push($filtroCidades, $item);
+				if($fCid == ""){
+					$fCid .= $item;
+				}else{
+					$fCid .= ", " . $item;
+				}
+			}
+		}
+	}
+	if(isset($_POST['areas_atuacao'])){
+		if(count($_POST['areas_atuacao']) > 0){
+			foreach($_POST['areas_atuacao'] as $item){
+				array_push($filtroAreasAtuacao, $item);
+				if($fAreAtu == ""){
+					$fAreAtu .= $item;
+				}else{
+					$fAreAtu .= ", " . $item;
+				}
+			}
+		}
+	}
+
+?>
+
+
 <!-- VAGAS ALUNOS -->
 <div class="container">
 	<br><br>
 	<!-- FORMULÁRIO DE BUSCA DE VAGAS -->
 	<div class="row">
 		<div class="col-md-6">
-			Olá, <b>Instituto Bairral</b>, você está logado, clique no botão ao lado para cadastrar uma nova vaga!
+			Olá, <b><?php echo $Empresa['nome'] ?></b>, você está logado, clique no botão ao lado para cadastrar uma nova vaga!
 		</div>		
 		<div class="col-md-4">
 			<div class="col-md-12 d-grid gap-2">
-				<button type="button" class=" btn btn-secondary">CADASTRAR UMA VAGA</button>
+				<button type="button" class=" btn btn-secondary" data-bs-toggle="modal" data-bs-target="#modalCadastrarVaga">CADASTRAR UMA VAGA</button>
 			</div>
 		</div>
 		<div class="col-md-2">
 			<div class="col-md-12 d-grid gap-2">
-				<a href="?pagina=empresas" class=" btn btn-danger">SAIR</a>
+				<button class="btn btn-danger dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"><?php echo mb_strtoupper($_SESSION['UsuarioLogin']) ?></button>
+				<ul class="dropdown-menu">
+					<li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#modalPerfil"><i class="fas fa-user"></i> Meu perfil</a></li>
+					<li><a class="dropdown-item" href="?pagina=principal"><i class="fas fa-home"></i> Página principal</a></li>
+					<hr>
+					<li><a class="dropdown-item" href="includes/logout.php"><i class="fas fa-door-closed"></i> Sair</a></li>
+				</ul>
 			</div>
 		</div>
 	</div>
+
+	<!-- Modal Perfil -->
+	<div class="modal fade" id="modalPerfil" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<form method="post" action="includes/editarEmpresa.php" class="row gy-2 gx-3 align-items-center">
+						<div class="col-sm-12">
+							<label for="nome" class="form-label">Nome: </label>
+							<input type="text" class="form-control" name="nome" id="nome" placeholder="Nome completo" value="<?php echo $Empresa['nome'] ?>" required>
+						</div>
+						<div class="col-sm-6">
+							<label for="ie" class="form-label">IE: </label>
+							<input type="text" class="form-control" name="ie" id="ie" placeholder="00.000.000" value="<?php echo $Empresa['ie'] ?>" required>
+						</div>				
+						<div class="col-sm-6">
+							<label for="data_contrato" class="form-label">Data última alter. contratual: </label>
+							<input type="date" class="form-control" name="data_contrato" id="data_contrato" value="<?php echo $Empresa['data_contrato'] ?>" required>
+						</div>
+						<div class="col-sm-6">
+							<label for="cnpj" class="form-label">CNPJ: </label>
+							<input type="text" class="form-control cpfOuCnpj" name="cnpj" id="cnpj" placeholder="00.000.000/0000-00" value="<?php echo $Empresa['cnpj'] ?>" required>
+						</div>
+						<div class="col-sm-6">
+							<label for="telefone" class="form-label">Telefone: </label>
+							<input type="text" class="form-control" name="telefone" id="telefone" placeholder="(19) 0 0000-0000" value="<?php echo $Empresa['telefone'] ?>" required>
+						</div>
+						<div class="col-sm-12">
+							<label for="email" class="form-label">E-mail: </label>
+							<input type="email" class="form-control" name="email" id="email" placeholder="fulano@fatec.sp.gov.br" value="<?php echo $Empresa['email'] ?>" required>
+						</div>
+						<div class="col-sm-4">
+							<label for="cep" class="form-label">CEP: </label>
+							<input type="text" class="form-control" name="cep" id="cep" placeholder="13970000" value="<?php echo $Empresa['cep'] ?>" required>
+						</div>
+						<div class="col-sm-12">
+							<label for="rua" class="form-label">Rua: </label>
+							<input type="text" class="form-control" name="rua" id="rua" placeholder="Rua xxxxxxxxxxx" value="<?php echo $Empresa['rua'] ?>" required>
+						</div>
+						<div class="col-sm-4">
+							<label for="numero" class="form-label">Número: </label>
+							<input type="text" class="form-control" name="numero" id="numero" placeholder="000" value="<?php echo $Empresa['numero'] ?>" required>
+						</div>
+						<div class="col-sm-8">
+							<label for="complemento" class="form-label">Complemento: </label>
+							<input type="text" class="form-control" name="complemento" id="complemento" placeholder="Apto 000 (Opcional)" value="<?php echo $Empresa['complemento'] ?>">
+						</div>
+						<div class="col-sm-12">
+							<label for="bairro" class="form-label">Bairro: </label>
+							<input type="text" class="form-control" name="bairro" id="bairro" placeholder="Bairro xxxxxxx" value="<?php echo $Empresa['bairro'] ?>" required>
+						</div>
+						<div class="col-sm-8">
+							<label for="cidade" class="form-label">Cidade: </label>
+							<input type="text" class="form-control" name="cidade" id="cidade" placeholder="Itapira" value="<?php echo $Empresa['cidade'] ?>" required>
+						</div>
+						<div class="col-sm-4">
+							<label for="estado" class="form-label">Estado: </label>
+							<input type="text" class="form-control" name="estado" id="estado" placeholder="SP" value="<?php echo $Empresa['estado'] ?>" required>
+						</div>
+				</div>
+				<div class="modal-footer">
+					<input type="hidden" name="id" value="<?php echo $Empresa['id'] ?>">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+					<button type="submit" class="btn btn-success">Salvar Alterações</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+		
+	<!-- Modal Cadastrar Vaga -->
+	<div class="modal fade" id="modalCadastrarVaga" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title fs-5" id="exampleModalLabel">Cadastrar Vaga</h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<form method="post" action="includes/cadastrarVaga.php" class="row gy-2 gx-3 align-items-center">
+					<div class="col-sm-6">
+						<label for="cidade" class="form-label">Cidade: </label>
+						<select class="form-select" name="cidades_id" id="cidade" required>
+							<option value=""></option>
+<?php
+		$sqlCidCadVaga = "SELECT * FROM cidades";
+		$resultadoCidCadVaga = mysqli_query($conexao, $sqlCidCadVaga);
+		$nlCidCadVaga = mysqli_num_rows($resultadoCidCadVaga);
+		
+		if($nlCidCadVaga > 0){
+			while($CidCadVaga = mysqli_fetch_array($resultadoCidCadVaga)){
+?>
+							<option value="<?php echo $CidCadVaga['id'] ?>"><?php echo $CidCadVaga['nome'] ?>/<?php echo $CidCadVaga['estado'] ?></option>
+<?php
+			}
+		}
+?>
+						</select>
+					</div>
+					<div class="col-sm-6">
+						<label for="areas_atuacao" class="form-label">Área de Atuação: </label>
+						<select class="form-select" name="areas_atuacao_id" id="areas_atuacao" required>
+							<option value=""></option>
+<?php
+		$sqlAreAtuVaga = "SELECT * FROM areas_atuacao";
+		$resultadoAreAtuVaga = mysqli_query($conexao, $sqlAreAtuVaga);
+		$nlAreAtuVaga = mysqli_num_rows($resultadoAreAtuVaga);
+		
+		if($nlAreAtuVaga > 0){
+			while($AreAtuVaga = mysqli_fetch_array($resultadoAreAtuVaga)){
+?>
+							<option value="<?php echo $AreAtuVaga['id'] ?>"><?php echo $AreAtuVaga['nome'] ?></option>
+<?php
+			}
+		}
+?>
+						</select>
+					</div>
+					<div class="col-sm-8">
+						<label for="nome" class="form-label">Nome da Vaga: </label>
+						<input type="text" class="form-control" name="nome" id="nome" placeholder="Nome da vaga..." required>
+					</div>
+					<div class="col-sm-4">
+						<label for="tipos_vagas" class="form-label">Tipo da Vaga: </label>
+						<select class="form-select" name="tipos_vagas_id" id="tipos_vagas" required>
+							<option value=""></option>
+<?php
+		$sqlTipVaga = "SELECT * FROM tipos_vagas";
+		$resultadoTipVaga = mysqli_query($conexao, $sqlTipVaga);
+		$nlTipVaga = mysqli_num_rows($resultadoTipVaga);
+		
+		if($nlTipVaga > 0){
+			while($TipVaga = mysqli_fetch_array($resultadoTipVaga)){
+?>
+								<option value="<?php echo $TipVaga['id'] ?>"><?php echo $TipVaga['tipo'] ?></option>
+<?php
+			}
+		}
+?>
+						</select>
+					</div>
+					<div class="col-sm-12">
+						<label for="descricao" class="form-label">Descrição: </label>
+						<textarea class="form-control" name="descricao" id="descricao" required></textarea>
+					</div>
+					<div class="col-sm-12">
+						<label for="local_trabalho" class="form-label">Local de Trabalho: </label>
+						<select class="form-select" name="local_trabalho" id="local_trabalho" required>
+							<option value="presencial">Presencial</option>
+							<option value="remoto">Remoto</option>
+							<option value="hibrido">Híbrido</option>
+						</select>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<input type="hidden" name="empresas_id" value="<?php echo $Empresa['id'] ?>">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+					<button type="submit" class="btn btn-success">Cadastrar Vaga</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<hr>
 	<!-- FIM DO FORMULÁRIO DE BUSCA DE VAGAS -->
 	<div class="row">
+		
 		<!-- FILTROS DAS VAGAS -->
 		<div class="col-md-2">
+			<form method="post">
 			<h4 class="text-danger">Filtros</h4>
-			<h5>Cidade</h5>
-			<input type="checkbox" id="itapira">
-			<label for="itapira">Itapira / SP</label><br>
-			<input type="checkbox" id="sp">
-			<label for="sp">São Paulo / SP</label><br>
-			<input type="checkbox" id="limeira">
-			<label for="limeira">Limeira / SP</label><br>
-			<input type="checkbox" id="mogimirim">
-			<label for="mogimirim">Mogi Mirim / SP</label><br>
-			<input type="checkbox" id="mogiguacu">
-			<label for="mogiguacu">Mogi Guaçu / SP</label><br>
-			<a href="#" class="text-danger">Mais</a>
+			<h5>Cidades</h5>
+<?php
+	
+	$sqlCidades = "SELECT * FROM cidades";
+	$resultadoCidades = mysqli_query($conexao, $sqlCidades);
+	$nlCidades = mysqli_num_rows($resultadoCidades);
+	
+	if($nlCidades > 0){
+		while($Cidades = mysqli_fetch_array($resultadoCidades)){
+			
+			if(in_array($Cidades['id'], $filtroCidades)){
+				$checkedCidades = "checked";
+			}else{
+				$checkedCidades = "";
+			}
+?>			
+			<input type="checkbox" name="cidades[]" id="<?php echo $Cidades['nome'] ?>_<?php echo $Cidades['id'] ?>" value="<?php echo $Cidades['id'] ?>" <?php echo $checkedCidades ?>>
+			<label for="<?php echo $Cidades['nome'] ?>_<?php echo $Cidades['id'] ?>"><?php echo $Cidades['nome'] ?>/<?php echo $Cidades['estado'] ?></label><br>
+<?php
+		}
+	}else{
+?>
+			<label>Não há cidades para exibir...</label><br>
+<?php
+	}
+?>			
 			<br><br>
-			<h5>Área</h5>
-			<input type="checkbox" id="eng">
-			<label for="eng">Engenharia</label><br>
-			<input type="checkbox" id="vendas">
-			<label for="vendas">Vendas</label><br>
-			<input type="checkbox" id="ti">
-			<label for="ti">T.I.</label><br>
-			<input type="checkbox" id="inf">
-			<label for="inf">Informática</label><br>
-			<input type="checkbox" id="log">
-			<label for="log">Logística</label><br>
-			<a href="#" class="text-danger">Mais</a>
+			<h5>Áreas de Atuação</h5>
+<?php
+	
+	$sqlAreasAtuacao = "SELECT * FROM areas_atuacao";
+	$resultadoAreasAtuacao = mysqli_query($conexao, $sqlAreasAtuacao);
+	$nlAreasAtuacao = mysqli_num_rows($resultadoAreasAtuacao);
+	
+	if($nlAreasAtuacao > 0){
+		while($AreasAtuacao = mysqli_fetch_array($resultadoAreasAtuacao)){
+			
+			if(in_array($AreasAtuacao['id'], $filtroAreasAtuacao)){
+				$checkedAreasAtuacao = "checked";
+			}else{
+				$checkedAreasAtuacao = "";
+			}
+?>				
+			<input type="checkbox" name="areas_atuacao[]" id="<?php echo $AreasAtuacao['nome'] ?>_<?php echo $AreasAtuacao['id'] ?>" value="<?php echo $AreasAtuacao['id'] ?>" <?php echo $checkedAreasAtuacao ?>>
+			<label for="<?php echo $AreasAtuacao['nome'] ?>_<?php echo $AreasAtuacao['id'] ?>"><?php echo $AreasAtuacao['nome'] ?></label><br>
+<?php
+		}
+	}else{
+?>
+			<label>Não há áreas de atuação para exibir...</label><br>
+<?php
+	}
+?>			
+			<div class="row">
+				<div class="col-md-6 d-grid gap-2">
+					<a href="?pagina=vagasEmpresa"><button type="button" class=" btn btn-secondary">LIMPAR FILTROS</button></a>
+				</div>
+				<div class="col-md-6">
+					<button type="submit" class=" btn btn-success">APLICAR FILTROS</button>
+				</div>
+			</div>
+			</form>
 		</div>
+		
 		<!-- FIM DOS FILTROS DAS VAGAS -->
 		<!-- VAGAS DISPONÍVEIS -->
 		<div class="col-md-10">
 <?php
-	for($i = 0; $i < 3; $i++){
+
+	if(isset($_POST['cidades'])){
+		$completaSqlCidades = "AND cidades_id IN (". $fCid .")";
+	}else{
+		$completaSqlCidades = "";
+	}
+	
+	if(isset($_POST['areas_atuacao'])){
+		$completaSqlAreasAtuacao = "AND areas_atuacao_id IN (". $fAreAtu .")";
+	}else{
+		$completaSqlAreasAtuacao = "";
+	}
+	
+	$sqlVagas = "SELECT * FROM vagas WHERE empresas_id='". $Empresa['id'] ."' ". $completaSqlCidades ." ". $completaSqlAreasAtuacao ."";
+	$resultadoVagas = mysqli_query($conexao, $sqlVagas);
+	$nlVagas = mysqli_num_rows($resultadoVagas);
+	
+	if($nlVagas > 0){
+		while($Vagas = mysqli_fetch_array($resultadoVagas)){
+			
+			$sqlCidadesVaga = "SELECT * FROM cidades WHERE id='". $Vagas['cidades_id'] ."'";
+			$resultadoCidadesVaga = mysqli_query($conexao, $sqlCidadesVaga);
+			$CidadesVaga = mysqli_fetch_array($resultadoCidadesVaga);
+			
+			$sqlAreasAtuacaoVaga = "SELECT * FROM areas_atuacao WHERE id='". $Vagas['areas_atuacao_id'] ."'";
+			$resultadoAreasAtuacaoVaga = mysqli_query($conexao, $sqlAreasAtuacaoVaga);
+			$AreasAtuacaoVaga = mysqli_fetch_array($resultadoAreasAtuacaoVaga);
+			
+			$sqlEmpresaVaga = "SELECT * FROM empresas WHERE id='". $Vagas['empresas_id'] ."'";
+			$resultadoEmpresaVaga = mysqli_query($conexao, $sqlEmpresaVaga);
+			$EmpresaVaga = mysqli_fetch_array($resultadoEmpresaVaga);
+			
+			if($Vagas['local_trabalho'] == "presencial"){
+				$iconeVaga = "<i class='fas fa-building'></i>";
+				$selectedPresencial = "selected";
+				$selectedRemoto = "";
+				$selectedOutro = "";
+			}elseif($Vagas['local_trabalho'] == "remoto"){
+				$iconeVaga = "<i class='fas fa-laptop-house'></i>";
+				$selectedPresencial = "";
+				$selectedRemoto = "selected";
+				$selectedOutro = "";
+			}else{
+				$iconeVaga = "<i class='fas fa-network-wired'></i>";
+				$selectedPresencial = "";
+				$selectedRemoto = "";
+				$selectedOutro = "selected";
+			}
+			
+			if($Vagas['ativo'] == 0){
+				$statusVaga = "<span class='badge text-bg-danger'>Vaga inativa</span>";
+				$corSatus = "text-black-50";
+			}else{
+				$statusVaga = "<span class='badge text-bg-success'>Vaga ativa</span>";
+				$corSatus = "";
+			}
 ?>		
-			<div class="mostra-vaga">
+			<div class="mostra-vaga <?php echo $corSatus ?>">
 				<div class="row">
 					<div class="col-md-2 icone-vaga">
-						<i class="fas fa-building"></i>
+						<?php echo $iconeVaga ?>
 					</div>
-					<div class="col-md-10">
-						<h1>Técnico de Informática</h1>
-						<small>T.I.</small>
-						<p>Instituto Bairral</p>
-						<p>Requisitos: conhecimento básico em montagem e manutenção de computadores, conhecimento básico em Pacote Microsoft Office e manutenção de impressora.</p>
+					<div class="col-md-8">
+						<h1><?php echo $Vagas['nome'] ?></h1>
+						<small>(<?php echo mb_strtoupper($Vagas['local_trabalho']) ?>) <?php echo $AreasAtuacaoVaga['nome'] ?></small>
+						<p><?php echo $EmpresaVaga['nome'] ?></p>
+						<p><?php echo $Vagas['descricao'] ?></p>
+					</div>
+					<div class="col-md-2">
+						<?php echo $statusVaga ?>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-md-3">
-						<i class="fas fa-map-marker-alt"></i> Itapira / SP.
-						<i class="fas fa-clock"></i> 07/06/2022.
+						<i class="fas fa-map-marker-alt"></i> <?php echo $CidadesVaga['nome'] ?>/<?php echo $CidadesVaga['estado'] ?>.
+						<i class="fas fa-clock"></i> <?php echo date("d/m/Y", strtotime($Vagas['data'])) ?>.
 					</div>
 					<div class="col-md-3"></div>
 					<div class="col-md-3 d-grid gap-2">
-						<button type="button" class="btn btn-warning"><i class="fas fa-edit"></i> Editar</button>
+						<button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modalEditarVaga_<?php echo $Vagas['id'] ?>"><i class="fas fa-edit"></i> Editar</button>
 					</div>
 					<div class="col-md-3 d-grid gap-2">
-						<button type="button" class="btn btn-danger"><i class="fas fa-trash"></i> Excluir</button>
+						<button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalRemoverVaga_<?php echo $Vagas['id'] ?>"><i class="fas fa-trash"></i> Excluir</button>
 					</div>
 				</div>
 			</div>
 			<br>
+			<!-- Modal Editar Vaga -->
+			<div class="modal fade" id="modalEditarVaga_<?php echo $Vagas['id'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div class="modal-dialog modal-lg">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h1 class="modal-title fs-5" id="exampleModalLabel">Editar Vaga</h1>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						<div class="modal-body">
+							<form method="post" action="includes/editarVaga.php" class="row gy-2 gx-3 align-items-center">
+							<div class="col-sm-6">
+								<label for="cidade" class="form-label">Cidade: </label>
+								<select class="form-select" name="cidades_id" id="cidade" required>
+									<option value=""></option>
+		<?php
+				$sqlCidCadVaga = "SELECT * FROM cidades";
+				$resultadoCidCadVaga = mysqli_query($conexao, $sqlCidCadVaga);
+				$nlCidCadVaga = mysqli_num_rows($resultadoCidCadVaga);
+				
+				if($nlCidCadVaga > 0){
+					while($CidCadVaga = mysqli_fetch_array($resultadoCidCadVaga)){
+						if($CidCadVaga['id'] == $Vagas['cidades_id']){
+							$selectedCidade = "selected";
+						}else{
+							$selectedCidade = "";
+						}
+		?>
+									<option value="<?php echo $CidCadVaga['id'] ?>" <?php echo $selectedCidade ?>><?php echo $CidCadVaga['nome'] ?>/<?php echo $CidCadVaga['estado'] ?></option>
+		<?php
+					}
+				}
+		?>
+								</select>
+							</div>
+							<div class="col-sm-6">
+								<label for="areas_atuacao" class="form-label">Área de Atuação: </label>
+								<select class="form-select" name="areas_atuacao_id" id="areas_atuacao" required>
+									<option value=""></option>
+		<?php
+				$sqlAreAtuVaga = "SELECT * FROM areas_atuacao";
+				$resultadoAreAtuVaga = mysqli_query($conexao, $sqlAreAtuVaga);
+				$nlAreAtuVaga = mysqli_num_rows($resultadoAreAtuVaga);
+				
+				if($nlAreAtuVaga > 0){
+					while($AreAtuVaga = mysqli_fetch_array($resultadoAreAtuVaga)){
+						if($AreAtuVaga['id'] == $Vagas['areas_atuacao_id']){
+							$selectedAreaAtuacao = "selected";
+						}else{
+							$selectedAreaAtuacao = "";
+						}
+		?>
+									<option value="<?php echo $AreAtuVaga['id'] ?>" <?php echo $selectedAreaAtuacao ?>><?php echo $AreAtuVaga['nome'] ?></option>
+		<?php
+					}
+				}
+		?>
+								</select>
+							</div>
+							<div class="col-sm-8">
+								<label for="nome" class="form-label">Nome da Vaga: </label>
+								<input type="text" class="form-control" name="nome" id="nome" placeholder="Nome da vaga..." value="<?php echo $Vagas['nome'] ?>" required>
+							</div>
+							<div class="col-sm-4">
+								<label for="tipos_vagas" class="form-label">Tipo da Vaga: </label>
+								<select class="form-select" name="tipos_vagas_id" id="tipos_vagas" required>
+									<option value=""></option>
+		<?php
+				$sqlTipVaga = "SELECT * FROM tipos_vagas";
+				$resultadoTipVaga = mysqli_query($conexao, $sqlTipVaga);
+				$nlTipVaga = mysqli_num_rows($resultadoTipVaga);
+				
+				if($nlTipVaga > 0){
+					while($TipVaga = mysqli_fetch_array($resultadoTipVaga)){
+						if($TipVaga['id'] == $Vagas['tipos_vagas_id']){
+							$selectedTipVaga = "selected";
+						}else{
+							$selectedTipVaga = "";
+						}
+		?>
+										<option value="<?php echo $TipVaga['id'] ?>" <?php echo $selectedTipVaga ?>><?php echo $TipVaga['tipo'] ?></option>
+		<?php
+					}
+				}
+		?>
+								</select>
+							</div>
+							<div class="col-sm-12">
+								<label for="descricao" class="form-label">Descrição: </label>
+								<textarea class="form-control" name="descricao" id="descricao" required><?php echo $Vagas['descricao'] ?></textarea>
+							</div>
+							<div class="col-sm-12">
+								<label for="local_trabalho" class="form-label">Local de Trabalho: </label>
+								<select class="form-select" name="local_trabalho" id="local_trabalho" required>
+									<option value="presencial" <?php echo $selectedPresencial ?>>Presencial</option>
+									<option value="remoto" <?php echo $selectedRemoto ?>>Remoto</option>
+									<option value="hibrido" <?php echo $selectedOutro ?>>Híbrido</option>
+								</select>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<input type="hidden" name="empresas_id" value="<?php echo $EmpresaVaga['id'] ?>">
+							<input type="hidden" name="id" value="<?php echo $Vagas['id'] ?>">
+							<input type="hidden" name="ativo" value="0">
+							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+							<button type="submit" class="btn btn-success">Editar Vaga</button>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- Modal Remover Vaga -->
+			<div class="modal fade" id="modalRemoverVaga_<?php echo $Vagas['id'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h1 class="modal-title fs-5" id="exampleModalLabel">Remover Vaga</h1>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						<div class="modal-body">
+							Você está prestes a remover a seguinte vaga:<br>
+							<b>Nome: </b><?php echo $Vagas['nome'] ?><br>
+							<b>Adicionada em: </b><?php echo date("d/m/Y", strtotime($Vagas['data'])) ?><br>
+							Tem certeza que deseja continuar?
+						</div>
+						<div class="modal-footer">
+							<form method="post" action="includes/excluirVaga.php">							
+							<input type="hidden" name="id" value="<?php echo $Vagas['id'] ?>">
+							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+							<button type="submit" class="btn btn-danger">Sim, remover a vaga!</button>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
 <?php
+		}
 	}
 ?>		
 		</div>

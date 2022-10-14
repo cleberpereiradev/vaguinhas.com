@@ -1,7 +1,17 @@
 <!-- LOGIN ALUNO -->
 <div class="container">
 <?php
-	if(isset($_POST['cpf'])){
+	if(isset($_SESSION['UsuarioID'])){
+		if($_SESSION['UsuarioTipo'] == "fatec"){
+			header("Location: ?pagina=loginFatec");
+		}elseif($_SESSION['UsuarioTipo'] == "empresa"){
+			header("Location: ?pagina=vagasEmpresa");
+		}else{
+			header("Location: ?pagina=vagas");
+		}
+	}
+
+	if(isset($_GET['ok'])){
 ?>
 	<br>
 	<div class="row">
@@ -16,9 +26,9 @@
 						<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 					</div>
 				</div>
-				<p>O seu cadastro para o site vaguinhas foi criado com sucesso! Você já pode ter acesso às vagas de trabalho das empresas parceiras.</p>
+				<p>O seu cadastro para o site vaguinhas foi criado com sucesso! Você será notificado por email quando a Fatec liberar o seu cadastro...</p>
 				<hr>
-				<p class="mb-0">Agora prossiga com o login, preenchendo o formulário abaixo.</p>
+				<p class="mb-0">Para fazer o login, preencha o formulário abaixo.</p>
 			</div>
 		</div>
 		<div class="col-md-2"></div>
@@ -29,8 +39,9 @@
 	<div class="row">
 		<div class="col-md-3"></div>
 		<div class="col-md-6 cadastro">
-			<h1>Entrar</h1><hr><br><br>
-			<form method="post" action="?pagina=vagas">
+			<h1>Entrar</h1><hr>
+			<form method="post" action="includes/sessao.php">
+				<input type="hidden" name="pagina" value="loginAluno" required>
 				<label for="email" class="form-label">E-mail</label>
 				<input type="email" class="form-control" name="email" id="email" placeholder="fulano@fatec.sp.gov.br" required>
 				<br>
@@ -45,7 +56,7 @@
 					
 					</div>
 				</div>				
-				<br><hr>
+				<hr>
 				<div class="row">
 					<div class="col-md-2"></div>
 					<div class="col-md-8 d-grid gap-2">
@@ -61,10 +72,10 @@
 					</div>
 					<div class="col-md-2"></div>
 				</div>
-				
 			</form>
 		</div>
 		<div class="col-md-3"></div>
 	</div>	
+	<br><br><br><br><br>
 </div>
 

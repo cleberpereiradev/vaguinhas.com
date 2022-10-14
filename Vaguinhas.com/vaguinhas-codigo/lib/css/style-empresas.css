@@ -69,9 +69,10 @@
 	border-radius: 15px;
 	background-color: #2e3e46;
 	color: #fff;
-	margin-top: 5%;
-	margin-bottom: 10%;
-	padding: 5%;
+	margin-top: 2%;
+	margin-bottom: 2%;
+	padding: 2%;
+	font-weight: bold;
 }
 .cadastro a:hover{
 	color: #be1e10;

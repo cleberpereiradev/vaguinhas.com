@@ -2,9 +2,9 @@
 	<meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta name="author" content="Otávio T. F. da Cunha" />
-	<meta name="description" content="Counter Strike Global Offensive" />
-	<meta name="keywords" content="csgo, cs, go, esport" />
+	<meta name="author" content="Otavio Cunha, Cleber Pereira, Pedro Santos, Matheus Gonçalves, Pedro Tellini, José Daniel Rosa" />
+	<meta name="description" content="Sistema de controle de vagas Fatec" />
+	<meta name="keywords" content="fatec, vagas, vaguinhas, site, oficial" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<meta name="robots" content="index, follow">
 	<!-- FONTS UTILIZADAS -->
@@ -16,18 +16,22 @@
     <link rel="stylesheet" href="lib/css/bootstrap.css" type="text/css">
 	<link rel="stylesheet" href="lib/css/style.css" type="text/css">
 <?php
-	if($_GET['pagina'] == "empresas" || $_GET['pagina'] == "cadastroEmpresa" || $_GET['pagina'] == "loginEmpresa" || $_GET['pagina'] == "vagasEmpresa"){
+	if(isset($_GET['pagina'])){
+		if($_GET['pagina'] == "empresas" || $_GET['pagina'] == "cadastroEmpresa" || $_GET['pagina'] == "loginEmpresa" || $_GET['pagina'] == "vagasEmpresa"){
 ?>
 	<link rel="stylesheet" href="lib/css/style-empresas.css" type="text/css">
 <?php		
+		}
 	}
 ?>	
 	<!-- JS UTILIZADO -->
-	<script src="lib/js/jquery.js"></script>
-    <script src="lib/js/popper.js"></script>
-    <script src="lib/js/bootstrap.js"></script>
-	<script src="lib/js/fontawesome.js"></script>
-	<script src="lib/js/mascarasCampos.js"></script>
+	<script type="text/javascript" src="lib/js/jquery.js"></script>
+    <script type="text/javascript" src="lib/js/popper.js"></script>
+    <script type="text/javascript" src="lib/js/bootstrap.js"></script>
+	<script type="text/javascript" src="lib/js/fontawesome.js"></script>
+	<script type="text/javascript" src="lib/js/mascarasCampos.js"></script>
+	<script type="text/javascript" src="lib/cep/jquery.js"></script>
+	<script type="text/javascript" src="lib/cep/cep.js"></script>
 	<!-- VALIDADOR DE CPF -->
 	<script src="lib/js/mask.js"></script>
 	<script src="lib/js/cpf_cnpj.js"></script>
@@ -51,3 +55,6 @@
 	<!-- FAVICON -->
 	<link rel="shortcut icon" href="lib/img/favicon.ico" type="image/x-icon" />
     <title>Vaguinhas</title>
+<?php
+	if (!isset($_SESSION)){session_start();}
+?>
