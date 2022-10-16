@@ -1,0 +1,129 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+		<meta http-equiv="Content-Language" content="en-us" />
+		
+		<style type="text/css" media="screen">
+		
+			html, body, div, span, applet, object, iframe,
+			h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+			a, abbr, acronym, address, big, cite, code,
+			del, dfn, em, font, img, ins, kbd, q, s, samp,
+			small, strike, strong, sub, sup, tt, var,
+			dl, dt, dd, ol, ul, li,
+			fieldset, form, label, legend,
+			table, caption, tbody, tfoot, thead, tr, th, td {
+				margin: 0; padding: 0; border: 0; font-weight: inherit;
+				font-style: inherit; font-size: 100%; font-family: inherit; vertical-align: baseline; }
+			a img,:link img,:visited img { border:none }
+			body { line-height: 1.5; font-family: Arial, Helvetica, Verdana, sans-serif; color: #333; font-size: 75%;}
+			html > body   { font-size: 12px; padding: 20px }  
+			h1 { font-size: 2.0em; font-weight: normal; margin: 0.6em 0em 0.8em 0em; padding: 0em; }
+			h2 { font-size: 1.4em; margin: 1.2em 0em 1.2em 0em; font-weight: normal; }
+			h3 { font-size: 1.2em; margin: 1.2em 0em 1.2em 0em; font-weight: normal; }
+			ol, ul, li { font-size: 1.0em; }
+			p { font-size: 1.0em; line-height: 1.6em; margin: 1.0em 0em 1.0em 0em; }
+			pre, code { font-family: monospace; font-size: 1.0em; }
+			
+			p { color: #444; }
+			a:link, a:hover, a:visited { color: #015C8A; }
+			#page { padding: 20px 20px; }
+			h1 { font-family: "helvetica neue", helvetica, arial, verdana, sans-serif; color: #999; border-bottom: 1px solid #999; padding-bottom: 5px;
+			margin-top: 0; }
+			h1 a { text-decoration: none; color: #999 !important; }
+			h1 a:hover { text-decoration: underline; }
+			h1 span { color: #444; }
+			h2 { font-family: "helvetica neue", helvetica, arial, verdana, sans-serif; border-bottom: 1px solid #CCC; padding-bottom: 5px; margin-bottom:
+			0.9em; color: #444; }
+			h3 { font-family: "helvetica neue", helvetica, arial, verdana, sans-serif; color: #444; margin-top: 1.0em; font-weight: bold; }
+			#nav { background: #333; padding: 7px 20px; }
+			#nav a { color: #FFB900; text-decoration: none; }
+			#nav a:hover { text-decoration: underline; }
+			code { font-weight: normal !important; }
+			li { margin-left: 16px; width: 100%}
+			strong { font-weight: bold }
+		</style>
+
+	<title>jQuery Quick Pagination</title>
+	
+</head>
+
+<body>
+	
+		<h1><span>jQuery Quick Pagination</span></h1>
+		
+		<h2>Overview</h2>
+
+		<p>A jQuery plugin that allows you to quickly and easily paginate almost any set of elements on a page. Super-easy to implement, provides a very stripped down prev/next navigation elements with optional page count display.</p>
+		
+		<p><strong>Current version:</strong> 1.0.1<br />
+			<strong>Dependancies:</strong> jQuery 1.2 or greater (may work with earlier releases but untested!)<br />
+			<strong>Licence:</strong> Released under a <a href="licence.txt">MIT-style licence</a>.</p>
+
+		<h2>Download:</h2>
+			
+		<ul class="download">
+			<li><a href="jquery.quickpaginate.zip"><strong>jQuery.quickpaginate.zip</strong></a> (all files, including packed version and docs)</li>
+			<li><a href="jquery.quickpaginate.js"><strong>jQuery.quickpaginate.js</strong></a> (unpacked, good for development use, 8kb)</li>
+			<li><a href="jquery.quickpaginate.packed.js"><strong>jQuery.quickpaginate.packed.js</strong></a> (packed, good for production use, 4kb)</li>
+		</ul>
+		
+		<h2>Demos:</h2>
+		
+		<p>View the <a href="demo.html">demo page</a> for code samples and demonstrations.</p>
+		
+		<h2>Usage Notes</h2>
+
+		<p>The plugin can be used to paginate pretty much any set of elements on a page. Simply call the plugin on a jQuery DOM object collection once the DOM is ready and it will take care of the rest! A settings object can be passed in to customise the behaviour (see below for setting options). </p>
+		
+		<p>The <strong>prev/next</strong> buttons will by default be placed after the last item in the collection, but you can easily change this by passing another jQuery DOM object collection in and the links will be <strong>appended</strong> within all of the specified elements.</p>
+		
+		<p>The main settings options are as follows:</p>
+		
+		<ul>
+			<li><strong>perpage</strong> (int) : The number of items to include per 'page' - <strong>default => 10</strong></li>
+			<li><strong>pager</strong> (object) : A collection of jQuery DOM objects to append the prev/next/counter items within - <strong>if not specified will be appended after last item in pagination list. </strong></li>
+			<li><strong>showcounter</strong> (boolean) : Whether or not to show the page count (i.e. 1/4, 2/4 etc) - <strong>default => true</strong></li>
+		</ul>
+		
+		<p>You can also customise the class names of the prev/next and counter elements in the settings object, should you not wish to use the defaults.</p>	
+		
+		<ul>
+			<li><strong>prev</strong> : The class name for the 'prev' link(s) - <strong>default => "qp_next"</strong></li>
+			<li><strong>next</strong> : The class name for the 'next' link(s) - <strong>default => "qp_prev"</strong></li>
+			<li><strong>counter</strong> : The class name for the <code>span</code> that wraps the counter - <strong>default => qp_counter</strong></li>
+			<li><strong>totalnumber</strong> : The class name for the <code>span</code> that wraps the total number of pages - <strong>default => "qp_totalnumber"</strong></li>
+			<li><strong>pagenumber</strong> : The class name for the <code>span</code> that wraps the current page count - <strong>default => "qp_pagenumber"</strong> </li>
+		</ul>
+		
+		<h2>Code Examples (see the <a href="demo.html">demo page</a> to see the plugin in action)</h2>
+
+<code class="snippet"><pre>
+	
+jQuery('.news_item').quickpaginate(); <span class="comment">// would paginate all items on the page with the class of 'news_item'</span>
+
+jQuery('div#quick_slideshow img').quickpaginate(); <span class="comment">// would paginate all img elements within the div with an id of 'quick_slideshow'</span>
+
+<span class="comment">// Paginate everything with the class of "news_item",
+// 5 per 'page' and without the page counter.</span>
+jQuery('.news_item').quickpaginate( { perpage: 5, showcounter: false } ); 
+
+<span class="comment">// Paginate all img elements and the element with the id of "info",
+// with the prev/next/counter element appended to the element with the id of "pager_here"</span>
+jQuery('img, #info').quickpaginate({ pager : $("#pager_here") }); 
+
+</pre></code>
+
+
+<h2>Changelog</h2>
+
+<p><strong>01.11.08</strong> - 1.0.1 Release: Fixes bug due to extra closing div in pager (thanks to Brian Rhinehart)</p>
+
+<p><strong>28.10.08</strong> - 1.0 Release.</p>
+
+</body>
+</html>

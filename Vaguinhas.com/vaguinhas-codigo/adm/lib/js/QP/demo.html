@@ -1,0 +1,146 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+		<script src="jquery-1.2.6.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="jquery.quickpaginate.packed.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" charset="utf-8">
+			$(function(){
+				$("#shopping_list li").quickpaginate({ perpage: 4, pager : $("#shopping_list_counter") });
+			});
+			
+			$(function(){
+				$("#images img").quickpaginate({ perpage: 1, showcounter: false, pager : $("#images_counter") });
+			});
+		</script>
+		
+		
+		<style type="text/css" media="screen">
+		
+			html, body, div, span, applet, object, iframe,
+			h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+			a, abbr, acronym, address, big, cite, code,
+			del, dfn, em, font, img, ins, kbd, q, s, samp,
+			small, strike, strong, sub, sup, tt, var,
+			dl, dt, dd, ol, ul, li,
+			fieldset, form, label, legend,
+			table, caption, tbody, tfoot, thead, tr, th, td {
+				margin: 0; padding: 0; border: 0; font-weight: inherit;
+				font-style: inherit; font-size: 100%; font-family: inherit; vertical-align: baseline; }
+			a img,:link img,:visited img { border:none }
+			body { line-height: 1.5; font-family: Arial, Helvetica, Verdana, sans-serif; color: #333; font-size: 75%;}
+			html > body   { font-size: 12px; padding: 20px }  
+			h1 { font-size: 2.0em; font-weight: normal; margin: 0.6em 0em 0.8em 0em; padding: 0em; }
+			h2 { font-size: 1.4em; margin: 1.2em 0em 1.2em 0em; font-weight: normal; }
+			h3 { font-size: 1.2em; margin: 1.2em 0em 1.2em 0em; font-weight: normal; }
+			ol, ul, li { font-size: 1.0em; }
+			p { font-size: 1.0em; line-height: 1.6em; margin: 1.0em 0em 1.0em 0em; }
+			pre, code { font-family: monospace; font-size: 1.0em; }
+			
+			p { color: #444; }
+			a:link, a:hover, a:visited { color: #015C8A; }
+			#page { padding: 20px 20px; }
+			h1 { font-family: "helvetica neue", helvetica, arial, verdana, sans-serif; color: #999; border-bottom: 1px solid #999; padding-bottom: 5px;
+			margin-top: 0; }
+			h1 a { text-decoration: none; color: #999 !important; }
+			h1 a:hover { text-decoration: underline; }
+			h1 span { color: #444; }
+			h2 { font-family: "helvetica neue", helvetica, arial, verdana, sans-serif; border-bottom: 1px solid #CCC; padding-bottom: 5px; margin-bottom:
+			0.9em; color: #444; }
+			h3 { font-family: "helvetica neue", helvetica, arial, verdana, sans-serif; color: #444; margin-top: 1.0em; font-weight: bold; }
+			#nav { background: #333; padding: 7px 20px; }
+			#nav a { color: #FFB900; text-decoration: none; }
+			#nav a:hover { text-decoration: underline; }
+			code { font-weight: normal !important; }
+			li { margin-left: 16px; width: 100%}
+			strong { font-weight: bold }
+
+		
+			#shopping_list {
+				margin: 0 0 10px 0;
+				padding: 0 14px;
+			}			
+		
+			.qp_counter {
+				margin:  10px;
+			}
+			
+			pre {
+				margin: 20px 0 10px 0;
+				background: #ccc !important;
+				padding: 10px;
+			}
+			
+			a.qp_disabled {
+				color: #888;
+			}
+			
+			#images_counter {
+				width: 200px;
+			}
+			
+			#images_counter .qp_prev {
+/*				margin-right: 30px;*/
+				display: block;
+				float: right;
+			}
+			
+			#images_counter .qp_next {
+				display: block;
+				float: left;
+			}
+		
+			
+		</style>
+
+	<title>jQuery Quick Pagination - Demo</title>
+	
+</head>
+
+<body>
+	
+	<h1><span>jQuery Quick Pagination</span></h1>
+	
+	<h2>Demos</h2>
+	
+	<p><a href="index.php">&laquo; Back to main plugin page</a></p>
+	
+<code class="snippet"><pre>
+$(function(){
+	$("#shopping_list li").quickpaginate({ perpage: 4, showcounter: true, pager : $("#shopping_list_counter") });
+});
+</pre></code>
+
+<ul id="shopping_list">
+	<li>carrots</li>
+	<li>beef</li>
+	<li>pineapple</li>
+	<li>tofu</li>
+	<li>lettuce</li>
+	<li>washing up liquid</li>
+	<li>yoghurt</li>
+	<li>chocolate</li>
+	<li>milk</li>
+	<li>bread</li>
+</ul>
+<div id="shopping_list_counter"></div>
+
+<code class="snippet"><pre>
+$(function(){
+	$("#images img").quickpaginate({ perpage: 1, showcounter: false, pager : $("#images_counter") });
+});
+</pre></code>
+
+<div id="images">
+	<img src="demo_images/demo1.jpg" width="200" height="133" alt="Demo1" />
+	<img src="demo_images/demo2.jpg" width="200" height="133" alt="Demo2" />
+	<img src="demo_images/demo3.jpg" width="200" height="133" alt="Demo3" />
+</div>
+
+<div id="images_counter"></div>
+
+</body>
+</html>

@@ -1,0 +1,70 @@
+table {
+    border-collapse: collapse;
+    font-size: 13px;
+    width: 100%;
+    font-family: Arial, sans-serif;
+    margin: 0px;
+}
+
+.tabelaModelo {
+    border-collapse: collapse;
+
+}
+
+.tabelaModelo table {
+    border: 1px solid black;
+}
+
+.TabelaParam {
+    font-size: 12px;
+    align: center;
+
+}
+
+h3{
+    text-align: center;
+    text-transform: uppercase;
+}
+
+
+h1{
+ text-align: center;
+}
+
+p.sub-titulo{
+ font-size: 20px;
+}
+
+.direita{
+ text-align: right;
+}
+
+.center{
+ text-align: center;
+}
+
+@page{
+    size: 8.5in 12in; /* <length>{1,2} | auto | portrait | landscape */
+	/* 'em' 'ex' and % are not allowed; length values are width height */
+	margin: 15px; /* <any of the usual CSS values for margins> */
+	/*(% of page-box width for LR, of height for TB) */
+
+
+	marks: /*crop | cross | none*/
+	header: html_myHTMLHeaderOdd;
+	footer: html_myHTMLFooterOdd;
+}
+
+.cabeca {
+    padding-top: 0px;
+}
+
+.textCorrido {
+    line-height: 1px;
+    font-size: 14px;
+
+}
+
+.linha {
+
+}
