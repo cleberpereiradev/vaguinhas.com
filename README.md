@@ -7,7 +7,7 @@ Cleber Pereira dos Santos Junior <br>
 João Pedro Domingues Telini <br>
 Matheus Cavalcanti Gonçalves <br>
 Otávio Tadeu Franklin da Cunha <br>
-Pedro Henrique Leite dos Santos <br><br>
+Pedro Henrique Leite dos Santos <br>
 José Daniel Cestaro Rosa <br><br>
 
 Justificativa <br><br>
