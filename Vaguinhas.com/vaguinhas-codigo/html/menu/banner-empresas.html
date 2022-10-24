@@ -5,6 +5,9 @@
 			recrutamento e seleção da<br>
 			Fatec para empresas
 		</h1>
+		<?php
+			if(!isset($_SESSION['UsuarioID'])){
+		?>
 		<div class="row">
 			<div class="col-md-2"></div>
 			<div class="col-md-3 d-grid gap-2">
@@ -14,7 +17,10 @@
 				<a href="?pagina=cadastroEmpresa" class="btn btn-outline-light" role="button">AFILIAR-SE</a>               
 			</div>
 			<div class="col-md-2"></div>
-		</div>		
+		</div>	
+		<?php
+			}
+		?>	
 	</div>
 	<div class="col-md-6">
 		<br>

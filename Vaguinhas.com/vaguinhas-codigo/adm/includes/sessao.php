@@ -39,6 +39,6 @@
 			exit;
 		}
 	}else{
-		echo "<script type='text/javascript' charset='utf-8'> alert('Voc\u00ea digitou um usu\u00e1rio ou senha inv\u00e1lido, ou seu usu\u00e1rio esta desativo!'); window.location.href='../index.php'; </script>";
+		echo "<script type='text/javascript' charset='utf-8'> alert('Voc\u00ea digitou um usu\u00e1rio ou senha inv\u00e1lido, ou seu usu\u00e1rio esta inativo!'); window.location.href='../index.php'; </script>";
 	}
 ?>

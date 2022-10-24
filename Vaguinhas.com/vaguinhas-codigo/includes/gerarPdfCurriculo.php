@@ -12,7 +12,7 @@
 	
 	$date = new DateTime($Aluno['data_nascimento']);
 	$interval = $date->diff( new DateTime( date('Y-m-d') ) );
-	$idade = $interval->format( '%Y anos' );
+	$idade = $interval->format( '%Y' );
 	
 	$endereco = $Aluno['rua'] . ", " . $Aluno['numero'];
 	if($Aluno['complemento'] != ""){

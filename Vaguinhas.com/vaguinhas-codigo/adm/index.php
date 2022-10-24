@@ -1,6 +1,11 @@
 <?php
 	if (!isset($_SESSION)) session_start();
 	include "includes/servidor.php";
+	if(isset($_SESSION['UsuarioID'])){
+		if($_SESSION['UsuarioNivel'] != 2){
+			echo "<script type='text/javascript' charset='utf-8'>window.location.href='includes/logout.php'; </script>";
+		}
+	}
 ?>
 <!DOCTYPE html>
 <html>

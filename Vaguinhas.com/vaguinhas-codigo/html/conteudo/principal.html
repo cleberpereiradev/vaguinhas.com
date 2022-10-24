@@ -20,21 +20,42 @@
 		<div class="row">
 			<div class="col-md-2"></div>
 <?php
-	for($i = 0; $i < 3; $i++){
+		include "includes/servidor.php";
+		
+		$sqlVagas = "SELECT * FROM vagas WHERE ativo='1' LIMIT 3";
+		$resultadoVagas = mysqli_query($conexao, $sqlVagas);
+		$nlVagas = mysqli_num_rows($resultadoVagas);
+		
+		if($nlVagas > 0){
+			while($Vagas = mysqli_fetch_array($resultadoVagas)){
+				
+				$sqlCidadesVaga = "SELECT * FROM cidades WHERE id='". $Vagas['cidades_id'] ."'";
+				$resultadoCidadesVaga = mysqli_query($conexao, $sqlCidadesVaga);
+				$CidadesVaga = mysqli_fetch_array($resultadoCidadesVaga);
+				
+				$sqlAreasAtuacaoVaga = "SELECT * FROM areas_atuacao WHERE id='". $Vagas['areas_atuacao_id'] ."'";
+				$resultadoAreasAtuacaoVaga = mysqli_query($conexao, $sqlAreasAtuacaoVaga);
+				$AreasAtuacaoVaga = mysqli_fetch_array($resultadoAreasAtuacaoVaga);
+				
+				$sqlEmpresaVaga = "SELECT * FROM empresas WHERE id='". $Vagas['empresas_id'] ."'";
+				$resultadoEmpresaVaga = mysqli_query($conexao, $sqlEmpresaVaga);
+				$EmpresaVaga = mysqli_fetch_array($resultadoEmpresaVaga);
+		
 ?>		
 			<div class="col-md-2 vaga">
-				<p class="nome-vaga">Atendente de Loja</p>
-                <p class="nome-empresa">Lowell</p>
-                <p class="descricao-vaga">Já pensou em trabalhar na maior empresa do varejo farmacêutico da américa latina, que tem como missão proporcionar cuidado e acolhimento aos seus funcionários e clientes?</p>
+				<p class="nome-vaga"><?php echo $Vagas['nome'] ?></p>
+                <p class="nome-empresa"><?php echo $EmpresaVaga['nome'] ?></p>
+                <p class="descricao-vaga"><?php echo $Vagas['descricao'] ?></p>
 				<p class="salario-vaga"><i class="fas fa-comment-dollar"></i> A combinar</p>
-				<p class="salario-vaga"><i class="fas fa-map-marker-alt"></i> Itapira / SP.</p>
+				<p class="salario-vaga"><i class="fas fa-map-marker-alt"></i> <?php echo $CidadesVaga['nome'] ?>/<?php echo $CidadesVaga['estado'] ?>.</p>
                 <div class="col-md-12 d-grid gap-2">
-					<button type="button" class="btn btn-danger">Ver mais...</button>
+					<a href="?pagina=vagas"><button type="button" class="btn btn-danger">Ver mais...</button></a>
 				</div>
 			</div>
 			<div class="col-md-1"></div>
 <?php
-	}
+			}
+		}
 ?>
 		</div>
 	

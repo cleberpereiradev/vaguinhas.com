@@ -51,7 +51,7 @@
 				<br>
 				<div class="row">
 					<div class="col-md-6">
-						<a href="">Esqueceu a senha?</a>
+						<a href="#" data-bs-toggle="modal" data-bs-target="#modalEsqueceuSenha">Esqueceu a senha?</a>
 					</div>
 					<div class="col-md-6">
 					
@@ -80,4 +80,26 @@
 	<br><br><br><br><br>
 </div>
 
-
+<!--
+	Bloco de código do Modal esqueceu senha
+-->
+<div class="modal fade" id="modalEsqueceuSenha" tabindex="-1" aria-labelledby="modalEsqueceuSenha" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h1 class="modal-title fs-5" id="exampleModalLabel" style="color: #000;">Alterar senha</h1>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<form method="post" action="includes/esqueceuSenha.php">
+				<label for="email" class="form-label" style="color: #000;">Digite seu e-mail para recuperar a senha</label>
+				<input type="email" class="form-control" name="email" id="email" placeholder="fulano@fatec.sp.gov.br" required>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+				<button type="submit" class="btn btn-primary">Enviar e-mail</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
