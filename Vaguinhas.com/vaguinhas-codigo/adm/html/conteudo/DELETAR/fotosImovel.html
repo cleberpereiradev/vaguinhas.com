@@ -1,0 +1,127 @@
+<?php
+	include "includes/servidor.php";
+	
+	if(!isset($_GET['id'])){
+		echo "<script type='text/javascript'> alert('Ocorreu um problema ao tentar localizar o im\u00f3vel. Tente novamente mais tarde...'); window.location.href='?pagina=cadastroImoveis'; </script>";
+		exit;
+	}else{
+		$id = (int)$_GET['id'];
+		
+		if($id < 1){
+			echo "<script type='text/javascript'> alert('Ocorreu um problema ao tentar localizar o im\u00f3vel. Tente novamente mais tarde...'); window.location.href='?pagina=cadastroImoveis'; </script>";
+			exit;
+		}
+	
+	}
+	
+	$sqlFt = "SELECT * FROM fotos_imovel WHERE imovel_id='". $id ."'";
+	$resultadoFt = mysqli_query($conexao, $sqlFt);
+	$nlFt = mysqli_num_rows($resultadoFt);
+
+?>
+<div class="content-wrapper">
+	<!-- Conteúdo -->
+	<section class="content">
+		<div class="row">
+			<div class="col-md-7">
+				<div class="box box-danger">
+					<div class="box-header">
+						<div class="row">
+							<div class="col-sm-12">
+								<h3 style="text-align: center; color: #4f98c2;"><i class="fas fa-images"></i> <B>Imagens do Imóvel</B></h3>
+							</div>
+						</div>
+					<hr>
+						<p align="justify"></p>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-5">
+				<div class="box box-danger">
+					<div class="box-header">
+						<div class="row">
+							<div class="col-sm-6">
+								<a href="?pagina=cadastroImoveis"><button type="button" class="butao-vermelho"><i class="fas fa-arrow-left"></i><br>Voltar</button></a>
+							</div>
+							<div class="col-sm-6">
+								<button type="button" class="butao-verde" data-toggle="modal" data-target="#adicionarFotosImovel"><i class="fas fa-folder-plus"></i><br>Cadastrar Fotos</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="box box-danger">
+			<div class="box-body chat" id="chat-box">
+				<div class="row form-group">
+					<div class="col-sm-12">
+						<div class="modal" id="adicionarFotosImovel">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-body">
+										<form action="includes/adicionarImagensImovel.php" method="post" enctype="multipart/form-data">
+											<input type="hidden" name="imoveis_id" value="<?php echo $id ?>">
+											<div class="row form-group">
+												<div class="col-sm-6">
+													<label>Adicionar imagens:</label>
+													<input type="file" name="arquivo[]" multiple>
+												</div>
+											</div>
+											<div class="modal-footer">
+												<button type="submit" class="btn btn-primary">Enviar</button>
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- FIM Modal Adiciona Imovel -->
+
+					</div>
+				</div>
+				<div class="row">
+<?php
+						if($nlFt > 0){
+							while($Ft = mysqli_fetch_array($resultadoFt)){
+?>
+					<div class="col-md-3">
+						<img src="../lib/images/fotos_imoveis/<?php echo $Ft['link'] ?>" class="img-fluid img-thumbnail"></img>
+						<br>
+						<button type="button" class="btn btn-danger btn-block" data-toggle="modal" data-target="#excluirFt_<?php echo $Ft['id'] ?>"><i class="fas fa-trash-alt"></i></button>
+						<hr>
+					</div>
+					<br>
+					<div class="modal" id="excluirFt_<?php echo $Ft['id'] ?>">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-body">
+									<form action="includes/excluirFotoImovel.php" method="post" enctype="multipart/form-data">
+										<input type="hidden" name="id" value="<?php echo $Ft['id'] ?>">
+										<input type="hidden" name="imovel_id" value="<?php echo $id ?>">
+										<div class="row form-group">
+											<div class="col-sm-12 text-center">
+												<img src="../lib/images/fotos_imoveis/<?php echo $Ft['link'] ?>" class="img-fluid img-thumbnail"></img>
+												<br>
+												<h5>Deseja realmente excluir esta imagem?</h5>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-sm-12 text-right">
+												<button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times"></i> Fechar</button>
+												<button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i> Excluir</button>
+											</div>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+<?php							
+							}
+						}
+?>									
+				</div>
+			</div>
+		</div>
+	</section>
+</div>

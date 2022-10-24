@@ -1,0 +1,142 @@
+<?php
+	
+	if(isset($_POST['filtro_lead'])){
+		$filtroLead = $_POST['filtro_lead'];
+	}else{
+		$filtroLead = 0;
+	}
+	
+?>
+
+<div class="content-wrapper">
+	<!-- Conteúdo -->
+	<section class="content">
+		<div class="row">
+			<div class="col-md-7">
+				<div class="box box-danger">
+					<div class="box-header">
+						<div class="row">
+							<div class="col-sm-12">
+								<h3 style="text-align: center; color: #4f98c2;"><i class="fas fa-hashtag"></i> <B>Campanhas de Redes Sociais</B></h3>
+								<p>Aqui estão os cadastros das campanhas realizadas nas redes sociais, sendo instagram ou facebook!</p>
+							</div>
+						</div>
+					<hr>
+						<p align="justify"></p>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-5">
+				<div class="box box-danger">
+					<div class="box-header">
+						<div class="row">
+							<div class="col-sm-6">
+								<a href="?pagina=principal"><button type="button" class="butao-vermelho"><i class="fas fa-arrow-left"></i><br>Voltar</button></a>
+							</div>
+							<div class="col-sm-3">
+								<form method="post">
+									<input type="hidden" name="filtro_lead" value="0">
+									<button type="submit" class="butao-vermelho"><i class="fas fa-book"></i><br>Filtrar Não Lidos</button>
+								</form>
+							</div>
+							<div class="col-sm-3">
+								<form method="post">
+									<input type="hidden" name="filtro_lead" value="1">
+									<button type="submit" class="butao-verde"><i class="fab fa-readme"></i><br>Filtrar Lidos</button>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="box box-danger">
+			<div class="box-body chat" id="chat-box">
+				<div class="row form-group">
+					<div class="col-sm-12">
+
+					</div>
+				</div>
+				<table class="table table-hover table-sm">
+					<thead>
+						<tr>
+							<th>Id</th>
+							<th>Nome</th>
+							<th>Endereço</th>
+							<th>Telefone</th>
+							<th>Local Trabalho</th>
+							<th>Email</th>
+							<th>Data</th>
+							<th>Campanha</th>
+							<th>Lido</th>
+							<th></th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+<?php
+			$sqlLead = "SELECT * FROM leads WHERE respondido='". $filtroLead ."'";
+			$resultadoLead = mysqli_query($conexao, $sqlLead);
+			$nlLead = mysqli_num_rows($resultadoLead);
+			if($nlLead > 0){
+				while($Lead = mysqli_fetch_array($resultadoLead)){
+					
+					if($Lead['respondido'] == 1){
+						$textoRespondido = "<span style='color: #25971c;'>Lido</span>";
+						$botaoLido = "<a href='includes/mudarLead.php?id=". $Lead['id'] ."&respondido=0'><button type='button' class='btn btn-warning btn-sm'><i class='fas fa-book'></i></button></a>";
+					}else{
+						$textoRespondido = "<span style='color: #FF0000;'>Não Lido</span>";
+						$botaoLido = "<a href='includes/mudarLead.php?id=". $Lead['id'] ."&respondido=1'><button type='button' class='btn btn-success btn-sm'><i class='fab fa-readme'></i></button></a>";
+					}
+					
+?>
+						<tr>
+							<td><?php echo $Lead['id'] ?></td>
+							<td><?php echo $Lead['nome'] ?></td>
+							<td><?php echo $Lead['endereco'] ?></td>
+							<td><?php echo $Lead['telefone'] ?></td>
+							<td><?php echo $Lead['local_trabalho'] ?></td>
+							<td><?php echo $Lead['email'] ?></td>
+							<td><?php echo date("d/m/Y", strtotime($Lead['data'])) ?></td>
+							<td><?php echo $Lead['campanha'] ?></td>
+							<td><?php echo $textoRespondido ?></td>
+							<td><?php echo $botaoLido ?></td>
+							<td>
+								<button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#excluirLead_<?php echo $Lead['id'] ?>"><i class="fas fa-trash-alt"></i></button>
+							</td>
+						</tr>
+
+						<div class="modal" id="excluirLead_<?php echo $Lead['id'] ?>">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-body">
+										<form action="includes/excluirLead.php" method="post" enctype="multipart/form-data">
+											<input type="hidden" name="id" value="<?php echo $Lead['id'] ?>">
+											<div class="row form-group">
+												<div class="col-sm-12 text-center">
+													<h5>Deseja realmente excluir este lead de contato?</h5>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-sm-12 text-right">
+													<button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times"></i> Fechar</button>
+													<button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i> Excluir</button>
+												</div>
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+
+
+<?php
+				}
+			}
+?>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</section>
+</div>

@@ -1,0 +1,145 @@
+<div class="content-wrapper">
+	<!-- Conteúdo -->
+	<section class="content">
+		<div class="row">
+			<div class="col-md-7">
+				<div class="box box-danger">
+					<div class="box-header">
+						<div class="row">
+							<div class="col-sm-12">
+								<h3 style="text-align: center; color: #4f98c2;"><i class="fas fa-house-damage"></i> <B>Categorias de Imóveis</B></h3>
+							</div>
+						</div>
+					<hr>
+						<p align="justify"></p>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-5">
+				<div class="box box-danger">
+					<div class="box-header">
+						<div class="row">
+							<div class="col-sm-6">
+								<a href="?pagina=principal"><button type="button" class="butao-vermelho"><i class="fas fa-arrow-left"></i><br>Voltar</button></a>
+							</div>
+							<div class="col-sm-6">
+								<button type="button" class="butao-verde" data-toggle="modal" data-target="#adicionarCategoriaImovel"><i class="fas fa-plus"></i><br> Cadastrar Categoria</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="box box-danger">
+			<div class="box-body chat" id="chat-box">
+				<div class="row form-group">
+					<div class="col-sm-12">
+						<div class="modal" id="adicionarCategoriaImovel">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-body">
+										<form action="includes/adicionarCategoria.php" method="post" enctype="multipart/form-data">
+											<div class="row form-group">
+												<div class="col-sm-12">
+													<label>Nome:</label><br>
+													<input type="text" class="form-control" name="nome" maxlength="150">
+												</div>
+											</div>
+											<div class="row form-group">
+												<div class="col-sm-12 text-right">
+													<button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times"></i> Fechar</button>
+													<button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Salvar</button>
+												</div>
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- FIM Modal Adiciona Imovel -->
+
+					</div>
+				</div>
+				<table class="table table-hover table-sm">
+					<thead>
+						<tr>
+							<th>Id</th>
+							<th>Nome</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+<?php
+			$sqlTipoImovel = "SELECT * FROM tipo_imovel";
+			$resultadoTipoImovel = mysqli_query($conexao, $sqlTipoImovel);
+			$nlTipoImovel = mysqli_num_rows($resultadoTipoImovel);
+			if($nlTipoImovel > 0){
+				while($TipoImovel = mysqli_fetch_array($resultadoTipoImovel)){
+					
+?>
+						<tr>
+							<td><?php echo $TipoImovel['id'] ?></td>
+							<td><?php echo $TipoImovel['nome'] ?></td>
+							<td>
+								<button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editarTipoImovel_<?php echo $TipoImovel['id'] ?>"><i class="fas fa-edit"></i></button>
+								<button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#excluirTipoImovel_<?php echo $TipoImovel['id'] ?>"><i class="fas fa-trash-alt"></i></button>
+							</td>
+						</tr>
+
+						<div class="modal" id="excluirTipoImovel_<?php echo $TipoImovel['id'] ?>">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-body">
+										<form action="includes/excluirCategoria.php" method="post" enctype="multipart/form-data">
+											<input type="hidden" name="id" value="<?php echo $TipoImovel['id'] ?>">
+											<div class="row form-group">
+												<div class="col-sm-12 text-center">
+													<h5>Deseja realmente excluir esta categoria de imóvel?</h5>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-sm-12 text-right">
+													<button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times"></i> Fechar</button>
+													<button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i> Excluir</button>
+												</div>
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="modal" id="editarTipoImovel_<?php echo $TipoImovel['id'] ?>">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-body">
+										<form action="includes/editarCategoria.php" method="post" enctype="multipart/form-data">
+											<input type="hidden" name="id" value="<?php echo $TipoImovel['id'] ?>">
+											<div class="row form-group">
+												<div class="col-sm-12">
+													<label>Nome:</label><br>
+													<input type="text" class="form-control" name="nome" value="<?php echo $TipoImovel['nome'] ?>" maxlength="150">
+												</div>
+											</div>
+											<div class="row form-group">
+												<div class="col-sm-12 text-right">
+													<button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times"></i> Fechar</button>
+													<button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Salvar</button>
+												</div>
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+
+<?php
+				}
+			}
+?>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</section>
+</div>

@@ -1,0 +1,399 @@
+<?php
+	
+	include "includes/servidor.php";
+	
+	$sqlAluno = "SELECT * FROM alunos WHERE id='". $_SESSION['UsuarioAlunosID'] ."'";
+	$resultadoAluno = mysqli_query($conexao, $sqlAluno);
+	$nlAluno = mysqli_num_rows($resultadoAluno);
+	
+	if($nlAluno > 0){
+		$Aluno = mysqli_fetch_array($resultadoAluno);
+	}else{
+		echo "<script type='text/javascript' charset='utf-8'> alert('O seu cadastro n\u00e3o foi localizado!'); window.location.href='includes/logout.php'; </script>";
+	}
+	
+	if(isset($_GET['tab'])){
+		$tab['redesSociais'] = "";
+		$show['redesSociais'] = "";
+		$tab['escolaridade'] = "";
+		$show['escolaridade'] = "";
+		$tab['experienciaProfissional'] = "";
+		$show['experienciaProfissional'] = "";
+		$tab['infoAdicionais'] = "";
+		$show['infoAdicionais'] = "";
+		
+		$tab[$_GET['tab']] = "active";
+		$show[$_GET['tab']] = "show";
+	
+	}else{
+		$tab['redesSociais'] = "active";
+		$show['redesSociais'] = "show";
+		$tab['escolaridade'] = "";
+		$show['escolaridade'] = "";
+		$tab['experienciaProfissional'] = "";
+		$show['experienciaProfissional'] = "";
+		$tab['infoAdicionais'] = "";
+		$show['infoAdicionais'] = "";
+	}
+
+?>
+<!-- CURRICULO ALUNOS -->
+<div class="container">
+	<br><br>
+<?php include "html/menu/menuVagasAlunos.html" ?>	
+	<hr>
+	<div class="row">
+		<div class="col-md-2">
+<?php
+			if($Aluno['link_foto'] != ""){
+?>						
+			<img src="lib/img/fotosPerfil/<?php echo $Aluno['link_foto'] ?>" alt="Foto do Perfil" class="img-fluid mx-auto d-block"></img>
+<?php
+			}else{
+?>	
+			<img src="lib/img/fotosPerfil/semFoto.png" alt="Foto do Perfil" class="img-fluid mx-auto d-block"></img>
+<?php
+			}
+?>
+			<hr>
+			<form method="post" target="_blank" action="includes/gerarPdfCurriculo.php" class="row gy-2 gx-3 align-items-center">
+				<input type="hidden" name="alunos_id" value="<?php echo $Aluno['id'] ?>">
+				<button type="submit" class="btn btn-primary btn-sm"><i class="fas fa-file-export"></i> Exportar Currículo</button>
+			</form>
+		</div>		
+		<div class="col-md-10">
+			<ul class="nav nav-tabs" id="myTab" role="tablist">
+				<li class="nav-item" role="presentation">
+					<button class="nav-link <?php echo $tab['redesSociais'] ?>" id="redesSociais-tab" data-bs-toggle="tab" data-bs-target="#redesSociais-tab-pane" type="button" role="tab" aria-controls="redesSociais-tab-pane" aria-selected="true">Redes Sociais</button>
+				</li>
+				<li class="nav-item" role="presentation">
+					<button class="nav-link <?php echo $tab['escolaridade'] ?>" id="escolaridade-tab" data-bs-toggle="tab" data-bs-target="#escolaridade-tab-pane" type="button" role="tab" aria-controls="escolaridade-tab-pane" aria-selected="false">Escolaridade</button>
+				</li>
+				<li class="nav-item" role="presentation">
+					<button class="nav-link <?php echo $tab['experienciaProfissional'] ?>" id="experienciaProfissional-tab" data-bs-toggle="tab" data-bs-target="#experienciaProfissional-tab-pane" type="button" role="tab" aria-controls="experienciaProfissional-tab-pane" aria-selected="false">Experiência Profissional</button>
+				</li>
+				<li class="nav-item" role="presentation">
+					<button class="nav-link <?php echo $tab['infoAdicionais'] ?>" id="infoAdicionais-tab" data-bs-toggle="tab" data-bs-target="#infoAdicionais-tab-pane" type="button" role="tab" aria-controls="infoAdicionais-tab-pane" aria-selected="false">Informações Adicionais</button>
+				</li>
+			</ul>
+			<div class="tab-content" id="myTabContent" style="background-color: #fff; padding: 15px;">
+				<div class="tab-pane fade <?php echo $show['redesSociais'] ?> <?php echo $tab['redesSociais'] ?>" id="redesSociais-tab-pane" role="tabpanel" aria-labelledby="redesSociais-tab" tabindex="0">
+					<form method="post" action="includes/editarAluno.php" class="row gy-2 gx-3 align-items-center">
+						<div class="col-sm-6">
+							<label for="github" class="form-label">GitHub: </label>
+							<div class="input-group mb-3">
+								<div class="input-group-text">
+									<i class="fab fa-github"></i>
+								</div>
+								<input type="text" class="form-control" name="github" id="github" maxlength="150" value="<?php echo $Aluno['github'] ?>">
+							</div>
+						</div>
+						<div class="col-sm-6">
+							<label for="linkedin" class="form-label">LinkedIn: </label>
+							<div class="input-group mb-3">
+								<div class="input-group-text">
+									<i class="fab fa-linkedin-in"></i>
+								</div>
+								<input type="text" class="form-control" name="linkedin" id="linkedin" maxlength="150" value="<?php echo $Aluno['linkedin'] ?>">
+							</div>
+						</div>
+						<div class="col-sm-6">
+							<label for="instagram" class="form-label">Instagram: </label>
+							<div class="input-group mb-3">
+								<div class="input-group-text">
+									<i class="fab fa-instagram"></i>
+								</div>
+								<input type="text" class="form-control" name="instagram" id="instagram" maxlength="150" value="<?php echo $Aluno['instagram'] ?>">
+							</div>
+						</div>
+						<div class="col-sm-6">
+							<label for="facebook" class="form-label">Facebook: </label>
+							<div class="input-group mb-3">
+								<div class="input-group-text">
+									<i class="fab fa-facebook"></i>
+								</div>
+								<input type="text" class="form-control" name="facebook" id="facebook" maxlength="150" value="<?php echo $Aluno['facebook'] ?>">
+							</div>
+						</div>
+						<div class="col-sm-6">
+							<label for="site" class="form-label">Site/Portifólio: </label>
+							<div class="input-group mb-3">
+								<div class="input-group-text">
+									<i class="fab fa-html5"></i>
+								</div>
+								<input type="text" class="form-control" name="site" id="site" maxlength="150" value="<?php echo $Aluno['site'] ?>">
+							</div>
+						</div>
+						<div class="col-md-8"></div>
+						<div class="col-md-4 d-grid gap-2">
+							<input type="hidden" name="id" value="<?php echo $Aluno['id'] ?>">
+							<input type="hidden" name="pagina" value="<?php echo $_GET['pagina'] ?>">
+							<button type="submit" class="btn btn-success">Atualizar Redes Sociais</button>
+						</div>
+					</form>
+				
+				</div>
+				
+				<div class="tab-pane fade <?php echo $show['escolaridade'] ?> <?php echo $tab['escolaridade'] ?>" id="escolaridade-tab-pane" role="tabpanel" aria-labelledby="escolaridade-tab" tabindex="0">
+					<div class="row">
+						<div class="col-md-6">
+							<form method="post" action="includes/adicionarEscolaridadeAluno.php" class="row gy-2 gx-3 align-items-center">
+								<div class="col-sm-6">
+									<label for="tipo" class="form-label">Tipo: </label>
+									<select class="form-select" name="tipo" id="tipo" required>
+										<option value="ensino fundamental">Ensino Fundamental</option>
+										<option value="ensino médio">Ensino Médio</option>
+										<option value="curso profissionalizante">Curso Profissionalizante / Técnico</option>
+										<option value="graduação">Graduação</option>
+										<option value="pós graduação">Pós Graduação</option>
+										<option value="mestrado">Mestrado</option>
+										<option value="doutorado">Doutorado</option>
+										<option value="mba">MBA</option>
+									</select>
+								</div>
+								<div class="col-sm-6">
+									<label for="ano" class="form-label">Ano conclusão: </label>
+									<select class="form-select" name="ano" id="ano" required>
+<?php
+								for($i = 1980; $i < (date('Y') + 10); $i++){
+								
+									if($i == date('Y')){
+										$selectedAno = "selected";
+									}else{
+										$selectedAno = "";
+									}
+?>									
+										<option value="<?php echo $i ?>" <?php echo $selectedAno ?>><?php echo $i ?></option>
+<?php
+								}
+?>									
+									</select>
+								</div>
+								<div class="col-sm-12">
+									<label for="local" class="form-label">Curso/Instituição de Ensino: </label>
+									<input type="text" class="form-control" name="local" id="local" maxlength="300" required>
+								</div>
+								<div class="col-md-12 d-grid gap-2">
+									<input type="hidden" name="alunos_id" value="<?php echo $Aluno['id'] ?>">
+									<input type="hidden" name="pagina" value="<?php echo $_GET['pagina'] ?>">
+									<input type="hidden" name="tab" value="escolaridade">
+									<button type="submit" class="btn btn-success">Adicionar escolaridade</button>
+								</div>
+							</form>
+						</div>
+						<div class="col-md-6">
+							<table class="table table-hover" style="font-size: 12px; text-align: center; vertical-align: middle;">
+								<thead>
+									<tr>
+										<th>Tipo</th>
+										<th>Instituição</th>
+										<th>Ano Conclusão</th>
+										<th></th>
+									</tr>
+								</thead>
+								<tbody>
+<?php
+					$sqlEscolaridades = "SELECT * FROM escolaridade_alunos WHERE alunos_id='". $Aluno['id'] ."' ORDER BY ano ASC";
+					$resultadoEscolaridades = mysqli_query($conexao, $sqlEscolaridades);
+					$nlEscolaridades = mysqli_num_rows($resultadoEscolaridades);
+					
+					if($nlEscolaridades > 0){
+						while($Escolaridades = mysqli_fetch_array($resultadoEscolaridades)){
+?>								
+									<tr>
+										<td><?php echo ucfirst($Escolaridades['tipo']) ?></td>
+										<td><?php echo ucfirst($Escolaridades['local']) ?></td>
+										<td><?php echo $Escolaridades['ano'] ?></td>
+										<td>
+											<form method="post" action="includes/removerEscolaridadeAluno.php">
+												<input type="hidden" name="id" value="<?php echo $Escolaridades['id'] ?>">
+												<input type="hidden" name="pagina" value="<?php echo $_GET['pagina'] ?>">
+												<input type="hidden" name="tab" value="escolaridade">
+												<button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
+											</form>
+										</td>
+									</tr>
+<?php
+						}
+					}else{
+?>
+									<tr>
+										<td colspan="4">Não há dados para serem mostrados...</td>
+									</tr>
+<?php				
+					}
+?>									
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+				
+				<div class="tab-pane fade <?php echo $show['experienciaProfissional'] ?> <?php echo $tab['experienciaProfissional'] ?>" id="experienciaProfissional-tab-pane" role="tabpanel" aria-labelledby="experienciaProfissional-tab" tabindex="0">
+					<div class="row">
+						<div class="col-md-6">
+							<form method="post" action="includes/adicionarExperienciaAluno.php" class="row gy-2 gx-3 align-items-center">
+								<div class="col-sm-6">
+									<label for="ano_inicio" class="form-label">Ano Início: </label>
+									<select class="form-select" name="ano_inicio" id="ano_inicio" required>
+<?php
+								for($i = 1980; $i < (date('Y') + 10); $i++){
+								
+									if($i == date('Y')){
+										$selectedAno = "selected";
+									}else{
+										$selectedAno = "";
+									}
+?>									
+										<option value="<?php echo $i ?>" <?php echo $selectedAno ?>><?php echo $i ?></option>
+<?php
+								}
+?>									
+									</select>
+								</div>
+								<div class="col-sm-6">
+									<label for="ano_termino" class="form-label">Ano Término: </label>
+									<select class="form-select" name="ano_termino" id="ano_termino" required>
+										<option value="atual">Atual</option>
+<?php
+								for($i = 1980; $i < (date('Y') + 10); $i++){
+?>									
+										<option value="<?php echo $i ?>"><?php echo $i ?></option>
+<?php
+								}
+?>									
+									</select>
+								</div>
+								<div class="col-sm-12">
+									<label for="local" class="form-label">Local de Trabalho: </label>
+									<input type="text" class="form-control" name="local" id="local" maxlength="300" required>
+								</div>
+								<div class="col-sm-12">
+									<label for="descricao" class="form-label">Descrição do Trabalho: </label>
+									<textarea class="form-control" name="descricao" id="descricao" maxlength="1000" required></textarea>
+								</div>
+								<div class="col-md-12 d-grid gap-2">
+									<input type="hidden" name="alunos_id" value="<?php echo $Aluno['id'] ?>">
+									<input type="hidden" name="pagina" value="<?php echo $_GET['pagina'] ?>">
+									<input type="hidden" name="tab" value="experienciaProfissional">
+									<button type="submit" class="btn btn-success">Adicionar experiência</button>
+								</div>
+							</form>
+						</div>
+						<div class="col-md-6">
+							<table class="table table-hover" style="font-size: 12px; text-align: center; vertical-align: middle;">
+								<thead>
+									<tr>
+										<th>Ano</th>
+										<th>Local</th>
+										<th>Descrição</th>
+										<th></th>
+									</tr>
+								</thead>
+								<tbody>
+<?php
+					$sqlExp = "SELECT * FROM experiencia_alunos WHERE alunos_id='". $Aluno['id'] ."' ORDER BY ano_inicio, ano_termino ASC";
+					$resultadoExp = mysqli_query($conexao, $sqlExp);
+					$nlExp = mysqli_num_rows($resultadoExp);
+					
+					if($nlExp > 0){
+						while($Exp = mysqli_fetch_array($resultadoExp)){
+?>								
+									<tr>
+										<td><?php echo $Exp['ano_inicio'] ?>/<?php echo ucfirst($Exp['ano_termino']) ?></td>
+										<td><?php echo ucfirst($Exp['local']) ?></td>
+										<td><?php echo $Exp['descricao'] ?></td>
+										<td>
+											<form method="post" action="includes/removerExperienciaAluno.php">
+												<input type="hidden" name="id" value="<?php echo $Exp['id'] ?>">
+												<input type="hidden" name="pagina" value="<?php echo $_GET['pagina'] ?>">
+												<input type="hidden" name="tab" value="experienciaProfissional">
+												<button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
+											</form>
+										</td>
+									</tr>
+<?php
+						}
+					}else{
+?>
+									<tr>
+										<td colspan="4">Não há dados para serem mostrados...</td>
+									</tr>
+<?php				
+					}
+?>									
+								</tbody>
+							</table>
+						</div>
+					</div>
+				
+				
+				</div>
+			
+				<div class="tab-pane fade <?php echo $show['infoAdicionais'] ?> <?php echo $tab['infoAdicionais'] ?>" id="infoAdicionais-tab-pane" role="tabpanel" aria-labelledby="infoAdicionais-tab" tabindex="0">
+					<div class="row">
+						<div class="col-md-6">
+							<form method="post" action="includes/adicionarInfoAluno.php" class="row gy-2 gx-3 align-items-center">
+								<div class="col-sm-12">
+									<label for="descricao" class="form-label">Descrição: </label>
+									<textarea class="form-control" name="descricao" id="descricao" maxlength="1000" required></textarea>
+								</div>
+								<div class="col-md-12 d-grid gap-2">
+									<input type="hidden" name="alunos_id" value="<?php echo $Aluno['id'] ?>">
+									<input type="hidden" name="pagina" value="<?php echo $_GET['pagina'] ?>">
+									<input type="hidden" name="tab" value="infoAdicionais">
+									<button type="submit" class="btn btn-success">Adicionar informação adicional</button>
+								</div>
+							</form>
+						</div>
+						<div class="col-md-6">
+							<table class="table table-hover" style="font-size: 12px; text-align: center; vertical-align: middle;">
+								<thead>
+									<tr>
+										<th>Descrição</th>
+										<th></th>
+									</tr>
+								</thead>
+								<tbody>
+<?php
+					$sqlInfo = "SELECT * FROM informacoes_alunos WHERE alunos_id='". $Aluno['id'] ."'";
+					$resultadoInfo = mysqli_query($conexao, $sqlInfo);
+					$nlInfo = mysqli_num_rows($resultadoInfo);
+					
+					if($nlInfo > 0){
+						while($Info = mysqli_fetch_array($resultadoInfo)){
+?>								
+									<tr>
+										<td><?php echo $Info['descricao'] ?></td>
+										<td>
+											<form method="post" action="includes/removerInfoAluno.php">
+												<input type="hidden" name="id" value="<?php echo $Info['id'] ?>">
+												<input type="hidden" name="pagina" value="<?php echo $_GET['pagina'] ?>">
+												<input type="hidden" name="tab" value="infoAdicionais">
+												<button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
+											</form>
+										</td>
+									</tr>
+<?php
+						}
+					}else{
+?>
+									<tr>
+										<td colspan="4">Não há dados para serem mostrados...</td>
+									</tr>
+<?php				
+					}
+?>									
+								</tbody>
+							</table>
+						</div>
+					</div>
+				
+				
+				</div>
+			</div>
+
+		</div>
+	</div>
+	<br><br>
+</div>

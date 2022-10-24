@@ -1,0 +1,236 @@
+<?php
+	if($Aluno['estado_civil'] == "solteiro"){
+		$selectedSolteiro = "selected";
+		$selectedUniaoEstavel = "";
+		$selectedCasado = "";
+		$selectedSeparadoJudicialmente = "";
+		$selectedDivorciado = "";
+		$selectedViuvo = "";
+	}elseif($Aluno['estado_civil'] == "união estável"){
+		$selectedSolteiro = "";
+		$selectedUniaoEstavel = "selected";
+		$selectedCasado = "";
+		$selectedSeparadoJudicialmente = "";
+		$selectedDivorciado = "";
+		$selectedViuvo = "";
+	}elseif($Aluno['estado_civil'] == "casado"){
+		$selectedSolteiro = "";
+		$selectedUniaoEstavel = "";
+		$selectedCasado = "selected";
+		$selectedSeparadoJudicialmente = "";
+		$selectedDivorciado = "";
+		$selectedViuvo = "";
+	}elseif($Aluno['estado_civil'] == "separado judicialmente"){
+		$selectedSolteiro = "";
+		$selectedUniaoEstavel = "";
+		$selectedCasado = "";
+		$selectedSeparadoJudicialmente = "selected";
+		$selectedDivorciado = "";
+		$selectedViuvo = "";
+	}elseif($Aluno['estado_civil'] == "divorciado"){
+		$selectedSolteiro = "";
+		$selectedUniaoEstavel = "";
+		$selectedCasado = "";
+		$selectedSeparadoJudicialmente = "";
+		$selectedDivorciado = "selected";
+		$selectedViuvo = "";
+	}elseif($Aluno['estado_civil'] == "viúvo"){
+		$selectedSolteiro = "";
+		$selectedUniaoEstavel = "";
+		$selectedCasado = "";
+		$selectedSeparadoJudicialmente = "";
+		$selectedDivorciado = "";
+		$selectedViuvo = "selected";
+	}else{
+		$selectedSolteiro = "";
+		$selectedUniaoEstavel = "";
+		$selectedCasado = "";
+		$selectedSeparadoJudicialmente = "";
+		$selectedDivorciado = "";
+		$selectedViuvo = "";
+	}
+
+?>
+	<div class="row">
+		<div class="col-md-3">
+			<div class="input-group mb-3">
+				<div class="input-group-text">
+					<i class="fas fa-search"></i>
+				</div>
+				<input type="text" class="form-control">
+			</div>
+		</div>
+		<div class="col-md-3">
+			<div class="input-group mb-3">
+				<div class="input-group-text">
+					<i class="fas fa-map-marker-alt"></i>
+				</div>
+				<input type="text" class="form-control">
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div class="col-md-12 d-grid gap-2">
+				<button type="button" class=" btn btn-danger">BUSCAR VAGA</button>
+			</div>
+		</div>
+		<div class="col-md-2">
+			<div class="col-md-12 d-grid gap-2 dropdown">
+				<button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"><?php echo mb_strtoupper($_SESSION['UsuarioLogin']) ?></button>
+				<ul class="dropdown-menu">
+					<li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#modalPerfil"><i class="fas fa-user"></i> Meu perfil</a></li>
+					<li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#modalFotoPerfil"><i class="fas fa-camera"></i> Minha foto de perfil</a></li>
+					<li><a class="dropdown-item" href="?pagina=curriculoAluno"><i class="fas fa-user-tie"></i> Meu curriculo</a></li>
+					<hr>
+					<li><a class="dropdown-item" href="?pagina=vagas"><i class="fas fa-home"></i> Página de Vagas</a></li>
+					<hr>
+					<li><a class="dropdown-item" href="includes/logout.php"><i class="fas fa-door-closed"></i> Sair</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<!-- Modal Perfil -->
+	<div class="modal fade" id="modalPerfil" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title fs-5" id="exampleModalLabel">Seu perfil</h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<form method="post" action="includes/editarAluno.php" class="row gy-2 gx-3 align-items-center">
+						<div class="col-sm-12">
+							<label for="nome" class="form-label">Nome: </label>
+							<input type="text" class="form-control" name="nome" id="nome" placeholder="Nome completo" value="<?php echo $Aluno['nome'] ?>" required>
+						</div>
+						<div class="col-sm-4">
+							<label for="rg" class="form-label">RG: </label>
+							<input type="text" class="form-control" name="rg" id="rg" placeholder="00.000.000-0" value="<?php echo $Aluno['rg'] ?>" required>
+						</div>
+						<div class="col-sm-4">
+							<label for="orgao" class="form-label">Órgão Exp.: </label>
+							<input type="text" class="form-control" name="orgao_emissor" id="orgao" placeholder="SSP/SP" value="<?php echo $Aluno['orgao_emissor'] ?>" required>
+						</div>
+						<div class="col-sm-4">
+							<label for="data_nascimento" class="form-label">Data Nasc.: </label>
+							<input type="date" class="form-control" name="data_nascimento" id="data_nascimento" value="<?php echo $Aluno['data_nascimento'] ?>" required>
+						</div>
+						<div class="col-sm-6">
+							<label for="cpf" class="form-label">CPF: </label>
+							<input type="text" class="form-control cpfOuCnpj cpf_cnpj" name="cpf" id="cpf" placeholder="000.000.000-00" value="<?php echo $Aluno['cpf'] ?>" required>
+						</div>
+						<div class="col-sm-6">
+							<label for="celular" class="form-label">Celular: </label>
+							<input type="text" class="form-control" name="celular" id="celular" placeholder="(19) 0 0000-0000" value="<?php echo $Aluno['celular'] ?>" required>
+						</div>
+						<div class="col-sm-6">
+							<label for="nacionalidade" class="form-label">Nacionalidade: </label>
+							<input type="text" class="form-control" name="nacionalidade" id="nacionalidade" value="<?php echo $Aluno['nacionalidade'] ?>" maxlength="100" required>
+						</div>
+						<div class="col-sm-6">
+							<label for="estado_civil" class="form-label">Estado Civil: </label>
+							<select class="form-select" name="estado_civil" id="estado_civil" required>
+								<option value="solteiro" <?php echo $selectedSolteiro ?>>Solteiro(a)</option>
+								<option value="união estável" <?php echo $selectedUniaoEstavel ?>>União Estável</option>
+								<option value="casado" <?php echo $selectedCasado ?>>Casado(a)</option>
+								<option value="separado judicialmente" <?php echo $selectedSeparadoJudicialmente ?>>Separado(a) Judicialmente</option>
+								<option value="divorciado" <?php echo $selectedDivorciado ?>>Divorciado(a)</option>
+								<option value="viúvo" <?php echo $selectedViuvo ?>>Viúvo(a)</option>
+							</select>
+						</div>
+						<div class="col-sm-12">
+							<label for="email" class="form-label">E-mail: </label>
+							<input type="email" class="form-control" name="email" id="email" placeholder="fulano@fatec.sp.gov.br" value="<?php echo $Aluno['email'] ?>" required>
+						</div>
+						<div class="col-sm-4">
+							<label for="cep" class="form-label">CEP: </label>
+							<input type="text" class="form-control" name="cep" id="cep" placeholder="13970000" value="<?php echo $Aluno['cep'] ?>" required>
+						</div>
+						<div class="col-sm-12">
+							<label for="rua" class="form-label">Rua: </label>
+							<input type="text" class="form-control" name="rua" id="rua" placeholder="Rua xxxxxxxxxxx" value="<?php echo $Aluno['rua'] ?>" required>
+						</div>
+						<div class="col-sm-4">
+							<label for="numero" class="form-label">Número: </label>
+							<input type="text" class="form-control" name="numero" id="numero" placeholder="000" value="<?php echo $Aluno['numero'] ?>" required>
+						</div>
+						<div class="col-sm-8">
+							<label for="complemento" class="form-label">Complemento: </label>
+							<input type="text" class="form-control" name="complemento" id="complemento" placeholder="Apto 000 (Opcional)" value="<?php echo $Aluno['complemento'] ?>">
+						</div>
+						<div class="col-sm-12">
+							<label for="bairro" class="form-label">Bairro: </label> 
+							<input type="text" class="form-control" name="bairro" id="bairro" placeholder="Bairro xxxxxxx" value="<?php echo $Aluno['bairro'] ?>" required>
+						</div>
+						<div class="col-sm-8">
+							<label for="cidade" class="form-label">Cidade: </label>
+							<input type="text" class="form-control" name="cidade" id="cidade" placeholder="Itapira" value="<?php echo $Aluno['cidade'] ?>" required>
+						</div>
+						<div class="col-sm-4">
+							<label for="estado" class="form-label">Estado: </label>
+							<input type="text" class="form-control" name="estado" id="estado" placeholder="SP" value="<?php echo $Aluno['estado'] ?>" required>
+						</div>
+				</div>
+				<div class="modal-footer">
+					<input type="hidden" name="id" value="<?php echo $Aluno['id'] ?>">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+					<button type="submit" class="btn btn-success">Salvar Alterações</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- Modal Foto Perfil -->
+	<div class="modal fade" id="modalFotoPerfil" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title fs-5" id="exampleModalLabel">Sua foto do perfil</h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<div class="row">
+						<div class="col-md-4">
+<?php
+							if($Aluno['link_foto'] != ""){
+?>						
+							<img src="lib/img/fotosPerfil/<?php echo $Aluno['link_foto'] ?>" alt="Foto do Perfil" class="img-fluid mx-auto d-block"></img>
+<?php
+							}else{
+?>	
+							<img src="lib/img/fotosPerfil/semFoto.png" alt="Foto do Perfil" class="img-fluid mx-auto d-block"></img>
+<?php
+							}
+?>						
+							<br>
+							<form method="post" action="includes/removerFotoPerfilAluno.php" class="row gy-2 gx-3 align-items-center">
+								<input type="hidden" name="alunos_id" value="<?php echo $Aluno['id'] ?>">
+								<input type="hidden" name="link_foto" value="<?php echo $Aluno['link_foto'] ?>">
+								<button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i> Remover foto</button>
+							</form>
+						</div>
+						<div class="col-md-8">
+							<form method="post" action="includes/fotoPerfilAluno.php" class="row gy-2 gx-3 align-items-center" enctype="multipart/form-data">
+								<div class="col-sm-12">
+									<label for="formFile" class="form-label">Atualizar foto do perfil:</label>
+									<input class="form-control" type="file" id="formFile" name="arquivo[]">
+								</div>
+								<input type="hidden" name="alunos_id" value="<?php echo $Aluno['id'] ?>">
+								<input type="hidden" name="link_foto" value="<?php echo $Aluno['link_foto'] ?>">
+								<button type="submit" class="btn btn-success btn-sm"><i class="fas fa-save"></i> Enviar foto</button>
+							</form>
+						</div>
+					</div>
+				
+				
+				
+				
+					
+						
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+				</div>
+			</div>
+		</div>
+	</div>

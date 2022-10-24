@@ -54,27 +54,22 @@
 		// Se a sessão não existir, inicia uma
 		if (!isset($_SESSION)){
 			session_start();
+		}
+		// Salva os dados encontrados na sessão
+		$_SESSION['UsuarioID'] = $user['id'];
+		$_SESSION['UsuarioLogin'] = $user['login'];
+		$_SESSION['UsuarioNivel'] = $user['nivel'];
+		$_SESSION['UsuarioEmpresasID'] = $user['empresas_id'];
+		$_SESSION['UsuarioAlunosID'] = $user['alunos_id'];
+		$_SESSION['UsuarioTipo'] = $user['tipo'];
 
-			// Salva os dados encontrados na sessão
-			$_SESSION['UsuarioID'] = $user['id'];
-			$_SESSION['UsuarioLogin'] = $user['login'];
-			$_SESSION['UsuarioNivel'] = $user['nivel'];
-			$_SESSION['UsuarioEmpresasID'] = $user['empresas_id'];
-			$_SESSION['UsuarioAlunosID'] = $user['alunos_id'];
-			$_SESSION['UsuarioTipo'] = $user['tipo'];
-
-			// Redireciona o visitante
-			if($_SESSION['UsuarioTipo'] == "fatec"){
-				header("Location: ../?pagina=loginFatec");
-			}elseif($_SESSION['UsuarioTipo'] == "empresa"){
-				header("Location: ../?pagina=vagasEmpresa");
-			}else{
-				header("Location: ../?pagina=vagas");
-			}
-			
+		// Redireciona o visitante
+		if($_SESSION['UsuarioTipo'] == "fatec"){
+			echo "<script type='text/javascript' charset='utf-8'> window.location.href='../?pagina=loginFatec'; </script>";
+		}elseif($_SESSION['UsuarioTipo'] == "empresa"){
+			echo "<script type='text/javascript' charset='utf-8'> window.location.href='../?pagina=vagasEmpresa'; </script>";
 		}else{
-			header("Location: ../?pagina=principal");
-			exit;
+			echo "<script type='text/javascript' charset='utf-8'> window.location.href='../?pagina=vagas'; </script>";
 		}
 	}else{
 		echo "<script type='text/javascript' charset='utf-8'> alert('Voc\u00ea digitou um email ou senha inv\u00e1lido, ou seu usu\u00e1rio n\u00e3o est\u00e1 ativo!'); window.location.href='../?pagina=$pagina'; </script>";

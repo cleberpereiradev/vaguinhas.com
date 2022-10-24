@@ -233,3 +233,8 @@ body{
 	font-weight: bold;
 	font-size: 0.8em;
 }
+.link-remove-candidatura{
+	font-size: 0.8em;
+	font-weight: bold;
+	color: #ff0000;
+}

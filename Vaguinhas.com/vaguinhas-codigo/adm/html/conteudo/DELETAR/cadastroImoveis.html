@@ -1,0 +1,408 @@
+<div class="content-wrapper">
+	<!-- Conteúdo -->
+	<section class="content">
+		<div class="row">
+			<div class="col-md-7">
+				<div class="box box-danger">
+					<div class="box-header">
+						<div class="row">
+							<div class="col-sm-12">
+								<h3 style="text-align: center; color: #4f98c2;"><i class="fas fa-hotel"></i> <B>Cadastro de Imóveis</B></h3>
+							</div>
+						</div>
+					<hr>
+						<p align="justify"></p>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-5">
+				<div class="box box-danger">
+					<div class="box-header">
+						<div class="row">
+							<div class="col-sm-6">
+								<a href="?pagina=principal"><button type="button" class="butao-vermelho"><i class="fas fa-arrow-left"></i><br>Voltar</button></a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="box box-danger">
+			<div class="box-body chat" id="chat-box">
+				<div class="row form-group">
+					<div class="col-sm-12">
+
+
+						<div class="modal" id="adicionarImovel">
+							<div class="modal-dialog modal-lg">
+								<div class="modal-content">
+									<div class="modal-body">
+										<form action="includes/adicionarImovel.php" method="post" enctype="multipart/form-data">
+											<div class="row form-group">
+												<div class="col-sm-6">
+													<label>Categoria:</label><br>
+													<select name="tipo_imovel_id" class="form-control custom-select">
+<?php
+				$sqlTipoImovel = "SELECT * FROM tipo_imovel";
+				$resultadoTipoImovel = mysqli_query($conexao, $sqlTipoImovel);
+				$nlTipoImovel = mysqli_num_rows($resultadoTipoImovel);
+				
+				if($nlTipoImovel > 0){
+					while($TipoImovel = mysqli_fetch_array($resultadoTipoImovel)){
+?>
+														<option value="<?php echo $TipoImovel['id'] ?>"><?php echo $TipoImovel['nome'] ?></option>
+<?php
+					}
+				}
+?>														
+													</select>
+												</div>
+												<div class="col-sm-6">
+													<label>Localização:</label><br>
+													<select name="localizacao_imovel_id" class="form-control custom-select">
+<?php
+				$sqlLocalizacao = "SELECT * FROM localizacao_imovel";
+				$resultadoLocalizacao = mysqli_query($conexao, $sqlLocalizacao);
+				$nlLocalizacao = mysqli_num_rows($resultadoLocalizacao);
+				
+				if($nlLocalizacao > 0){
+					while($Localizacao = mysqli_fetch_array($resultadoLocalizacao)){
+?>
+														<option value="<?php echo $Localizacao['id'] ?>"><?php echo $Localizacao['bairro'] ?> - <?php echo $Localizacao['cidade'] ?> / <?php echo $Localizacao['estado'] ?></option>
+<?php
+					}
+				}
+?>														
+													</select>
+												</div>
+											</div>
+											<hr>
+											<div class="row form-group">
+												<div class="col-sm-12">
+													<label>Nome:</label><br>
+													<input type="text" class="form-control" name="nome" maxlength="150">
+												</div>
+											</div>
+											<div class="row form-group">
+												<div class="col-sm-12">
+													<label>Descrição:</label><br>
+													<textarea class="form-control" name="descricao"></textarea>
+												</div>
+											</div>
+											<div class="row form-group">
+												<div class="col-sm-6">
+													<label>Tipo de Imóvel:</label><br>
+													<select name="compra" class="form-control custom-select">
+														<option value="0">Venda</option>
+														<option value="1">Aluguel</option>
+													</select>
+												</div>
+												<div class="col-sm-6">
+													<label>Imóvel Pronto:</label><br>
+													<select name="pronto" class="form-control custom-select">
+														<option value="0">Imóvel Pronto</option>
+														<option value="1">Imóvel na Planta</option>
+													</select>
+												</div>
+											</div>
+											<div class="row form-group">
+												<div class="col-sm-12">
+													<label>Endereço:</label><br>
+													<input type="text" class="form-control" name="endereco" maxlength="500">
+												</div>
+											</div>
+											<div class="row form-group">
+												<div class="col-sm-6">
+													<label>Tipo de Valor:</label><br>
+													<select name="apartir" class="form-control custom-select">
+														<option value="0">Valor Fixo</option>
+														<option value="1">À Partir de:</option>
+													</select>
+												</div>
+												<div class="col-sm-6">
+													<label>Valor:</label><br>
+													<input type="text" class="form-control" name="valor" onkeyup="soNumero(this);">
+												</div>
+											</div>
+											<div class="row form-group">
+												<div class="col-sm-4">
+													<label>Quantidade de Quartos:</label><br>
+													<input type="text" class="form-control" name="qtd_quartos" onkeyup="soNumero(this);">
+												</div>
+												<div class="col-sm-4">
+													<label>Metragem:</label><br>
+													<input type="text" class="form-control" name="metragem" onkeyup="soNumero(this);">
+												</div>
+												<div class="col-sm-4">
+													<label>Tipo Acabamento:</label><br>
+													<select name="personalizavel" class="form-control custom-select">
+														<option value="0">Não Personalizável</option>
+														<option value="1">Permite Reformas (Personalizável)</option>
+													</select>
+												</div>
+											</div>
+											<div class="row form-group">
+												<div class="col-sm-12 text-right">
+													<button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times"></i> Fechar</button>
+													<button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Salvar</button>
+												</div>
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- FIM Modal Adiciona Imovel -->
+
+					</div>
+				</div>
+				<table class="table table-hover table-sm">
+					<thead>
+						<tr>
+							<th>Id</th>
+							<th>Título</th>
+							<th>Descrição</th>
+							<th>Categoria</th>
+							<th>Venda/Aluguel</th>
+							<th>Valor</th>
+							<th>Imagens</th>
+							<th><button type="button" class="btn btn-success" data-toggle="modal" data-target="#adicionarImovel"><i class="fas fa-plus"></i> Adicionar</button></th>
+						</tr>
+					</thead>
+					<tbody>
+<?php
+			$sqlImovel = "SELECT * FROM imovel";
+			$resultadoImovel = mysqli_query($conexao, $sqlImovel);
+			$nlImovel = mysqli_num_rows($resultadoImovel);
+			if($nlImovel > 0){
+				while($Imovel = mysqli_fetch_array($resultadoImovel)){
+
+					if($Imovel['compra'] == 1){
+						$statusImovel = "Aluguel";
+					}else{
+						$statusImovel = "Venda";
+					}
+					
+					$sqlCat = "SELECT * FROM tipo_imovel WHERE id='". $Imovel['tipo_imovel_id'] ."'";
+					$resultadoCat = mysqli_query($conexao, $sqlCat);
+					$Cat = mysqli_fetch_array($resultadoCat);
+					
+					$sqlFt = "SELECT * FROM fotos_imovel WHERE imovel_id='". $Imovel['id'] ."'";
+					$resultadoFt = mysqli_query($conexao, $sqlFt);
+					$nlFt = mysqli_num_rows($resultadoFt);
+					
+?>
+						<tr>
+							<td><?php echo $Imovel['id'] ?></td>
+							<td><?php echo $Imovel['nome'] ?></td>
+							<td><?php echo mb_strimwidth($Imovel['descricao'], 0, 100, "...") ?></td>
+							<td><?php echo $Cat['nome'] ?></td>
+							<td><?php echo $statusImovel ?></td>
+							<td>R$ <?php echo number_format($Imovel['valor'], 2, ',', '.') ?></td>
+							<td><a href="?pagina=fotosImovel&id=<?php echo $Imovel['id'] ?>"><button type="button" class="btn btn-info btn-sm"><?php echo $nlFt ?> <i class="fas fa-images"></i></button></a></td>
+							<td>
+								<button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editarImovel_<?php echo $Imovel['id'] ?>"><i class="fas fa-edit"></i></button>
+								<button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#excluirImovel_<?php echo $Imovel['id'] ?>"><i class="fas fa-trash-alt"></i></button>
+							</td>
+						</tr>
+
+						<div class="modal" id="excluirImovel_<?php echo $Imovel['id'] ?>">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-body">
+										<form action="includes/excluirImovel.php" method="post" enctype="multipart/form-data">
+											<input type="hidden" name="id" value="<?php echo $Imovel['id'] ?>">
+											<div class="row form-group">
+												<div class="col-sm-12 text-center">
+													<h5>Deseja realmente excluir este imóvel?</h5>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-sm-12 text-right">
+													<button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times"></i> Fechar</button>
+													<button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i> Excluir</button>
+												</div>
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="modal" id="editarImovel_<?php echo $Imovel['id'] ?>">
+							<div class="modal-dialog modal-lg">
+								<div class="modal-content">
+									<div class="modal-body">
+										<form action="includes/editarImovel.php" method="post" enctype="multipart/form-data">
+											<input type="hidden" name="id" value="<?php echo $Imovel['id'] ?>">
+											<div class="row form-group">
+												<div class="col-sm-6">
+													<label>Categoria:</label><br>
+													<select name="tipo_imovel_id" class="form-control custom-select">
+<?php
+				$sqlTipoImovel = "SELECT * FROM tipo_imovel";
+				$resultadoTipoImovel = mysqli_query($conexao, $sqlTipoImovel);
+				$nlTipoImovel = mysqli_num_rows($resultadoTipoImovel);
+				
+				if($nlTipoImovel > 0){
+					while($TipoImovel = mysqli_fetch_array($resultadoTipoImovel)){
+						if($TipoImovel['id'] == $Imovel['tipo_imovel_id']){
+							$selectedTipoImovel = "selected";
+						}else{
+							$selectedTipoImovel = "";
+						}						
+?>
+														<option value="<?php echo $TipoImovel['id'] ?>" <?php echo $selectedTipoImovel ?>><?php echo $TipoImovel['nome'] ?></option>
+<?php
+					}
+				}
+?>														
+													</select>
+												</div>
+												<div class="col-sm-6">
+													<label>Localização:</label><br>
+													<select name="localizacao_imovel_id" class="form-control custom-select">
+<?php
+				$sqlLocalizacao = "SELECT * FROM localizacao_imovel";
+				$resultadoLocalizacao = mysqli_query($conexao, $sqlLocalizacao);
+				$nlLocalizacao = mysqli_num_rows($resultadoLocalizacao);
+				
+				if($nlLocalizacao > 0){
+					while($Localizacao = mysqli_fetch_array($resultadoLocalizacao)){
+						if($Localizacao['id'] == $Imovel['localizacao_imovel_id']){
+							$selectedLocalizacao = "selected";
+						}else{
+							$selectedLocalizacao = "";
+						}
+?>
+														<option value="<?php echo $Localizacao['id'] ?>" <?php echo $selectedLocalizacao ?>><?php echo $Localizacao['bairro'] ?> - <?php echo $Localizacao['cidade'] ?> / <?php echo $Localizacao['estado'] ?></option>
+<?php
+					}
+				}
+?>														
+													</select>
+												</div>
+											</div>
+											<hr>
+											<div class="row form-group">
+												<div class="col-sm-12">
+													<label>Nome:</label><br>
+													<input type="text" class="form-control" name="nome" value="<?php echo $Imovel['nome'] ?>" maxlength="150">
+												</div>
+											</div>
+											<div class="row form-group">
+												<div class="col-sm-12">
+													<label>Descrição:</label><br>
+													<textarea class="form-control" name="descricao"><?php echo $Imovel['descricao'] ?></textarea>
+												</div>
+											</div>
+											<div class="row form-group">
+												<div class="col-sm-6">
+													<label>Tipo de Imóvel:</label><br>
+													<select name="compra" class="form-control custom-select">
+<?php 
+										if($Imovel['compra'] == 0){
+											$selectCompra0 = "selected";
+											$selectCompra1 = "";
+										}else{
+											$selectCompra0 = "";
+											$selectCompra1 = "selected";
+										}
+?>													
+														<option value="0" <?php echo $selectCompra0 ?>>Venda</option>
+														<option value="1" <?php echo $selectCompra1 ?>>Aluguel</option>
+													</select>
+												</div>
+												<div class="col-sm-6">
+													<label>Imóvel Pronto:</label><br>
+													<select name="pronto" class="form-control custom-select">
+<?php 
+										if($Imovel['pronto'] == 0){
+											$selectPronto0 = "selected";
+											$selectPronto1 = "";
+										}else{
+											$selectPronto0 = "";
+											$selectPronto1 = "selected";
+										}
+?>													
+														<option value="0" <?php echo $selectPronto0 ?>>Imóvel Pronto</option>
+														<option value="1" <?php echo $selectPronto1 ?>>Imóvel na Planta</option>
+													</select>
+												</div>
+											</div>
+											<div class="row form-group">
+												<div class="col-sm-12">
+													<label>Endereço:</label><br>
+													<input type="text" class="form-control" name="endereco" value="<?php echo $Imovel['endereco'] ?>" maxlength="500">
+												</div>
+											</div>
+											<div class="row form-group">
+												<div class="col-sm-6">
+													<label>Tipo de Valor:</label><br>
+													<select name="apartir" class="form-control custom-select">
+<?php 
+										if($Imovel['apartir'] == 0){
+											$selectAPartir0 = "selected";
+											$selectAPartir1 = "";
+										}else{
+											$selectAPartir0 = "";
+											$selectAPartir1 = "selected";
+										}
+?>													
+														<option value="0" <?php echo $selectAPartir0 ?>>Valor Fixo</option>
+														<option value="1" <?php echo $selectAPartir1 ?>>À Partir de:</option>
+													</select>
+												</div>
+												<div class="col-sm-6">
+													<label>Valor:</label><br>
+													<input type="text" class="form-control" name="valor" value="<?php echo $Imovel['valor'] ?>" onkeyup="soNumero(this);">
+												</div>
+											</div>
+											<div class="row form-group">
+												<div class="col-sm-4">
+													<label>Quantidade de Quartos:</label><br>
+													<input type="text" class="form-control" name="qtd_quartos" value="<?php echo $Imovel['qtd_quartos'] ?>" onkeyup="soNumero(this);">
+												</div>
+												<div class="col-sm-4">
+													<label>Metragem:</label><br>
+													<input type="text" class="form-control" name="metragem" value="<?php echo $Imovel['metragem'] ?>" onkeyup="soNumero(this);">
+												</div>
+												<div class="col-sm-4">
+													<label>Tipo Acabamento:</label><br>
+													<select name="personalizavel" class="form-control custom-select">
+<?php 
+										if($Imovel['personalizavel'] == 0){
+											$selectPersonalizavel0 = "selected";
+											$selectPersonalizavel1 = "";
+										}else{
+											$selectPersonalizavel0 = "";
+											$selectPersonalizavel1 = "selected";
+										}
+?>													
+														<option value="0" <?php echo $selectPersonalizavel0 ?>>Não Personalizável</option>
+														<option value="1" <?php echo $selectPersonalizavel1 ?>>Permite Reformas (Personalizável)</option>
+													</select>
+												</div>
+											</div>
+											<div class="row form-group">
+												<div class="col-sm-12 text-right">
+													<button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times"></i> Fechar</button>
+													<button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Salvar</button>
+												</div>
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+
+<?php
+				}
+			}
+?>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</section>
+</div>

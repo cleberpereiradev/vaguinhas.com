@@ -1,0 +1,183 @@
+<div class="content-wrapper">
+	<!-- Conteúdo -->
+	<section class="content">
+		<div class="row">
+			<div class="col-md-7">
+				<div class="box box-danger">
+					<div class="box-header">
+						<div class="row">
+							<div class="col-sm-12">
+								<h3 style="text-align: center; color: #4f98c2;"><i class="fas fa-globe-americas"></i> <B>Bairro dos Imóveis</B></h3>
+							</div>
+						</div>
+					<hr>
+						<p align="justify"></p>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-5">
+				<div class="box box-danger">
+					<div class="box-header">
+						<div class="row">
+							<div class="col-sm-6">
+								<a href="?pagina=principal"><button type="button" class="butao-vermelho"><i class="fas fa-arrow-left"></i><br>Voltar</button></a>
+							</div>
+							<div class="col-sm-6">
+								<button type="button" class="butao-verde" data-toggle="modal" data-target="#adicionarLocalizacaoImovel"><i class="fas fa-plus"></i><br> Cadastrar Bairro</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="box box-danger">
+			<div class="box-body chat" id="chat-box">
+				<div class="row form-group">
+					<div class="col-sm-12">
+						<div class="modal" id="adicionarLocalizacaoImovel">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-body">
+										<form action="includes/adicionarLocalizacao.php" method="post" enctype="multipart/form-data">
+											<div class="row form-group">
+												<div class="col-sm-12">
+													<label>Bairro:</label><br>
+													<input type="text" class="form-control" name="bairro" maxlength="500">
+												</div>
+											</div>
+											<div class="row form-group">
+												<div class="col-sm-12">
+													<label>Cidade:</label><br>
+													<input type="text" class="form-control" name="cidade" maxlength="500">
+												</div>
+											</div>
+											<div class="row form-group">
+												<div class="col-sm-6">
+													<label>Estado:</label><br>
+													<input type="text" class="form-control" name="estado" maxlength="500">
+												</div>
+												<div class="col-sm-6">
+													<label>País:</label><br>
+													<input type="text" class="form-control" name="pais" maxlength="500">
+												</div>
+											</div>
+											<div class="row form-group">
+												<div class="col-sm-12 text-right">
+													<button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times"></i> Fechar</button>
+													<button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Salvar</button>
+												</div>
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- FIM Modal Adiciona Imovel -->
+
+					</div>
+				</div>
+				<table class="table table-hover table-sm">
+					<thead>
+						<tr>
+							<th>Id</th>
+							<th>Bairro</th>
+							<th>Cidade</th>
+							<th>Estado</th>
+							<th>País</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+<?php
+			$sqlLocalizacaoImovel = "SELECT * FROM localizacao_imovel";
+			$resultadoLocalizacaoImovel = mysqli_query($conexao, $sqlLocalizacaoImovel);
+			$nlLocalizacaoImovel = mysqli_num_rows($resultadoLocalizacaoImovel);
+			if($nlLocalizacaoImovel > 0){
+				while($LocalizacaoImovel = mysqli_fetch_array($resultadoLocalizacaoImovel)){
+					
+?>
+						<tr>
+							<td><?php echo $LocalizacaoImovel['id'] ?></td>
+							<td><?php echo $LocalizacaoImovel['bairro'] ?></td>
+							<td><?php echo $LocalizacaoImovel['cidade'] ?></td>
+							<td><?php echo $LocalizacaoImovel['estado'] ?></td>
+							<td><?php echo $LocalizacaoImovel['pais'] ?></td>
+							<td>
+								<button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editarLocalizacaoImovel_<?php echo $LocalizacaoImovel['id'] ?>"><i class="fas fa-edit"></i></button>
+								<button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#excluirLocalizacaoImovel_<?php echo $LocalizacaoImovel['id'] ?>"><i class="fas fa-trash-alt"></i></button>
+							</td>
+						</tr>
+
+						<div class="modal" id="excluirLocalizacaoImovel_<?php echo $LocalizacaoImovel['id'] ?>">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-body">
+										<form action="includes/excluirLocalizacao.php" method="post" enctype="multipart/form-data">
+											<input type="hidden" name="id" value="<?php echo $LocalizacaoImovel['id'] ?>">
+											<div class="row form-group">
+												<div class="col-sm-12 text-center">
+													<h5>Deseja realmente excluir esta localização de imóvel?</h5>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-sm-12 text-right">
+													<button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times"></i> Fechar</button>
+													<button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i> Excluir</button>
+												</div>
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="modal" id="editarLocalizacaoImovel_<?php echo $LocalizacaoImovel['id'] ?>">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-body">
+										<form action="includes/editarLocalizacao.php" method="post" enctype="multipart/form-data">
+											<input type="hidden" name="id" value="<?php echo $LocalizacaoImovel['id'] ?>">
+											<div class="row form-group">
+												<div class="col-sm-12">
+													<label>Bairro:</label><br>
+													<input type="text" class="form-control" name="bairro" value="<?php echo $LocalizacaoImovel['bairro'] ?>" maxlength="500">
+												</div>
+											</div>
+											<div class="row form-group">
+												<div class="col-sm-12">
+													<label>Cidade:</label><br>
+													<input type="text" class="form-control" name="cidade" value="<?php echo $LocalizacaoImovel['cidade'] ?>" maxlength="500">
+												</div>
+											</div>
+											<div class="row form-group">
+												<div class="col-sm-6">
+													<label>Estado:</label><br>
+													<input type="text" class="form-control" name="estado" value="<?php echo $LocalizacaoImovel['estado'] ?>" maxlength="500">
+												</div>
+												<div class="col-sm-6">
+													<label>País:</label><br>
+													<input type="text" class="form-control" name="pais" value="<?php echo $LocalizacaoImovel['pais'] ?>" maxlength="500">
+												</div>
+											</div>
+											<div class="row form-group">
+												<div class="col-sm-12 text-right">
+													<button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times"></i> Fechar</button>
+													<button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Salvar</button>
+												</div>
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+
+<?php
+				}
+			}
+?>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</section>
+</div>

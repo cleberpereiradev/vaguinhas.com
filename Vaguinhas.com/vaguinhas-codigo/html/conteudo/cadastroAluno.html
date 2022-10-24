@@ -29,6 +29,21 @@
 					<label for="celular" class="form-label">Celular: </label>
 					<input type="text" class="form-control" name="celular" id="celular" placeholder="(19) 0 0000-0000" required>
 				</div>
+				<div class="col-sm-6">
+					<label for="nacionalidade" class="form-label">Nacionalidade: </label>
+					<input type="text" class="form-control" name="nacionalidade" id="nacionalidade" maxlength="100" required>
+				</div>
+				<div class="col-sm-6">
+					<label for="estado_civil" class="form-label">Estado Civil: </label>
+					<select class="form-select" name="estado_civil" id="estado_civil" required>
+						<option value="solteiro">Solteiro(a)</option>
+						<option value="união estável">União Estável</option>
+						<option value="casado">Casado(a)</option>
+						<option value="separado judicialmente">Separado(a) Judicialmente</option>
+						<option value="divorciado">Divorciado(a)</option>
+						<option value="viúvo">Viúvo(a)</option>
+					</select>
+				</div>
 				<div class="col-sm-12">
 					<label for="email" class="form-label">E-mail: </label>
 					<input type="email" class="form-control" name="email" id="email" placeholder="fulano@fatec.sp.gov.br" required>

@@ -346,6 +346,16 @@
 			$resultadoEmpresaVaga = mysqli_query($conexao, $sqlEmpresaVaga);
 			$EmpresaVaga = mysqli_fetch_array($resultadoEmpresaVaga);
 			
+			$sqlCandidatos = "SELECT * FROM candidatos_vagas WHERE vagas_id='". $Vagas['id'] ."' ORDER BY data DESC";
+			$resultadoCandidatos = mysqli_query($conexao, $sqlCandidatos);
+			$nlCandidatos = mysqli_num_rows($resultadoCandidatos);
+			
+			if($nlCandidatos > 0){
+				$mostraQtdCandidatos = "<small class='text-success'>(". $nlCandidatos .")</small>";
+			}else{
+				$mostraQtdCandidatos = "<small class='text-danger'>(". $nlCandidatos .")</small>";
+			}
+			
 			if($Vagas['local_trabalho'] == "presencial"){
 				$iconeVaga = "<i class='fas fa-building'></i>";
 				$selectedPresencial = "selected";
@@ -391,7 +401,9 @@
 						<i class="fas fa-map-marker-alt"></i> <?php echo $CidadesVaga['nome'] ?>/<?php echo $CidadesVaga['estado'] ?>.
 						<i class="fas fa-clock"></i> <?php echo date("d/m/Y", strtotime($Vagas['data'])) ?>.
 					</div>
-					<div class="col-md-3"></div>
+					<div class="col-md-3 d-grid gap-2">
+						<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalVerCandidatos_<?php echo $Vagas['id'] ?>"><i class="fas fa-eye"></i> Candidatos <?php echo $mostraQtdCandidatos ?></button>
+					</div>
 					<div class="col-md-3 d-grid gap-2">
 						<button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modalEditarVaga_<?php echo $Vagas['id'] ?>"><i class="fas fa-edit"></i> Editar</button>
 					</div>
@@ -531,6 +543,67 @@
 							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
 							<button type="submit" class="btn btn-danger">Sim, remover a vaga!</button>
 							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- Modal Ver Candidatos -->
+			<div class="modal fade" id="modalVerCandidatos_<?php echo $Vagas['id'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div class="modal-dialog modal-lg">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h1 class="modal-title fs-5" id="exampleModalLabel">Candidatos da vaga</h1>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						<div class="modal-body">
+							<table class="table table-hover" style="font-size: 14px;">
+								<thead>
+									<tr>
+										<th>Data</th>
+										<th>Nome/Email</th>
+										<th>Celular</th>
+										<th>Objetivos</th>
+										<th>Curriculo</th>
+									</tr>
+								</thead>
+								<tbody>
+<?php
+				if($nlCandidatos > 0){
+					while($Candidatos = mysqli_fetch_array($resultadoCandidatos)){
+						$sqlAlunoCandidato = "SELECT * FROM alunos WHERE id='". $Candidatos['alunos_id'] ."'";
+						$resultadoAlunoCandidato = mysqli_query($conexao, $sqlAlunoCandidato);
+						$AlunoCandidato = mysqli_fetch_array($resultadoAlunoCandidato);
+?>								
+									<tr>
+										<td><?php echo date("d/m/Y", strtotime($Candidatos['data'])) ?></td>
+										<td>
+											<?php echo $AlunoCandidato['nome'] ?><br>
+											<?php echo $AlunoCandidato['email'] ?>
+										</td>
+										<td><?php echo $AlunoCandidato['celular'] ?></td>
+										<td><?php echo $Candidatos['obs_aluno'] ?></td>
+										<td>
+											<form method="post" target="_blank" action="includes/gerarPdfCurriculo.php" class="row gy-2 gx-3 align-items-center">
+												<input type="hidden" name="alunos_id" value="<?php echo $AlunoCandidato['id'] ?>">
+												<button type="submit" class="btn btn-info btn-sm"><i class="fas fa-file-pdf"></i></button>
+											</form>
+										</td>
+									</tr>
+<?php
+					}
+				}else{
+?>
+									<tr>
+										<td colspan="5">Não há candidatos inscritos para esta vaga...</td>
+									</tr>
+<?php
+				}
+?>									
+								</tbody>
+							</table>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
 						</div>
 					</div>
 				</div>
