@@ -20,7 +20,8 @@ Visão <br><br>
 Itens de documentação está no diretório /documentação, são eles: <br>
   -PMCanvas do produto<br>
   -Visão e backlog<br>
-  -Diagrama de atividades e de casos de uso (UML)<br>
+  -Diagrama de atividades, BPMN e de casos de uso (UML)<br>
+  -Diagrama DER do banco de dados.
   
 Organização do código fonte:<br><br>
 
